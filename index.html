@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BARPLAY — Аркадная игра для баров | Больше выручки без вложений</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rubik:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root{--pk:#FF2D6B;--cy:#00FFF7;--yw:#FFE033;--gn:#39FF14;--pr:#B026FF;--or:#FF6B2D;
+            --bg:#0A0A12;--bgc:#111120;--bgch:#16162A;--bd:rgba(255,255,255,.06);
+            --t1:#EEEEF5;--t2:#7A7A9A;--t3:#44445A;--pxf:'Press Start 2P',monospace;--bf:'Rubik',sans-serif;}
+        *{margin:0;padding:0;box-sizing:border-box;}
+        html{scroll-behavior:smooth;}
+        body{background:var(--bg);color:var(--t1);font-family:var(--bf);overflow-x:hidden;line-height:1.6;}
+        body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.03) 2px,rgba(0,0,0,.03) 4px);pointer-events:none;z-index:10000;}
+        body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(circle 1px,rgba(255,255,255,.015) 1px,transparent 1px);background-size:24px 24px;pointer-events:none;}
+
+        @keyframes g1{0%,100%{clip-path:inset(0 0 96% 0);transform:translate(0)}20%{clip-path:inset(20% 0 60% 0);transform:translate(-4px,2px)}40%{clip-path:inset(50% 0 30% 0);transform:translate(4px,-1px)}60%{clip-path:inset(70% 0 10% 0);transform:translate(-2px,3px)}80%{clip-path:inset(10% 0 80% 0);transform:translate(3px,-2px)}}
+        @keyframes g2{0%,100%{clip-path:inset(96% 0 0 0);transform:translate(0)}20%{clip-path:inset(60% 0 20% 0);transform:translate(4px,-2px)}40%{clip-path:inset(30% 0 50% 0);transform:translate(-3px,1px)}60%{clip-path:inset(10% 0 70% 0);transform:translate(2px,-3px)}80%{clip-path:inset(80% 0 5% 0);transform:translate(-4px,2px)}}
+        @keyframes flicker{0%,100%{opacity:1}93%{opacity:.7}94%{opacity:1}96%{opacity:.85}97%{opacity:1}}
+        @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+        @keyframes fadeUp{from{opacity:0;transform:translateY(35px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes pixel-rain{0%{transform:translateY(-100%);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateY(calc(100vh+100%));opacity:0}}
+        @keyframes crt-on{0%{transform:scaleY(.005) scaleX(0);opacity:0}30%{transform:scaleY(.005) scaleX(1);opacity:.5}60%{transform:scaleY(1) scaleX(1);filter:brightness(3)}100%{transform:scaleY(1) scaleX(1);filter:brightness(1)}}
+        @keyframes flag-wave{0%,100%{transform:skewX(0)}50%{transform:skewX(-5deg)}}
+        @keyframes walk{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+
+        .scroll-bar{position:fixed;top:0;left:0;height:3px;z-index:10002;background:linear-gradient(90deg,var(--pk),var(--cy),var(--yw),var(--gn));transition:width .05s;}
+
+        nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;background:rgba(10,10,18,.85);backdrop-filter:blur(16px);border-bottom:1px solid var(--bd);transition:padding .3s;}
+        nav.sc{padding:.6rem 2rem;}
+        .logo{font-family:var(--pxf);font-size:1rem;color:var(--cy);text-shadow:0 0 10px var(--cy),0 0 30px rgba(0,255,247,.3);text-decoration:none;animation:flicker 8s infinite;}
+        .logo .pk{color:var(--pk);text-shadow:0 0 10px var(--pk),0 0 30px rgba(255,45,107,.3);}
+        .nl{display:flex;gap:2rem;align-items:center;}
+        .nl a{color:var(--t2);text-decoration:none;font-size:.85rem;font-weight:600;transition:all .3s;}
+        .nl a:hover{color:var(--cy);}
+        .btn-cta{font-family:var(--pxf);font-size:.55rem;background:var(--pk);color:#fff!important;padding:.7rem 1.2rem;border:2px solid var(--pk);transition:all .3s;text-decoration:none;cursor:pointer;}
+        .btn-cta:hover{background:transparent;color:var(--pk)!important;box-shadow:0 0 20px rgba(255,45,107,.4);}
+        .burger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:1001;background:none;border:none;padding:4px;}
+        .burger span{display:block;width:28px;height:2px;background:var(--cy);transition:all .3s;}
+        .burger.on span:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
+        .burger.on span:nth-child(2){opacity:0;}
+        .burger.on span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px);}
+        .mob-menu{display:none;position:fixed;inset:0;background:rgba(10,10,18,.97);z-index:999;flex-direction:column;align-items:center;justify-content:center;gap:2rem;}
+        .mob-menu.on{display:flex;}
+        .mob-menu a{font-family:var(--pxf);font-size:.75rem;color:var(--t1);text-decoration:none;transition:color .3s;}
+        .mob-menu a:hover{color:var(--cy);}
+
+        /* HERO */
+        .hero{min-height:100vh;display:flex;align-items:center;position:relative;padding:7rem 2rem 4rem;overflow:hidden;}
+        .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 30% 40%,rgba(255,45,107,.08) 0%,transparent 60%),radial-gradient(ellipse 50% 40% at 80% 60%,rgba(0,255,247,.06) 0%,transparent 60%);}
+        .pixel-rain{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
+        .pixel-drop{position:absolute;width:4px;height:4px;animation:pixel-rain linear infinite;}
+        .hero-inner{max-width:1200px;margin:0 auto;position:relative;z-index:2;width:100%;}
+        .hero-badge{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--pxf);font-size:.5rem;color:var(--yw);border:1px solid rgba(255,224,51,.3);padding:.6rem 1rem;margin-bottom:1.5rem;background:rgba(255,224,51,.05);animation:fadeUp .6s ease both;}
+        .hero-badge::before{content:'►';animation:blink 1s infinite;}
+        .hero-title{font-family:var(--bf);font-weight:900;font-size:clamp(2.2rem,5vw,4.2rem);line-height:1.1;margin-bottom:1.5rem;text-transform:uppercase;animation:fadeUp .6s ease .1s both;}
+        .gt{position:relative;display:inline-block;color:var(--cy);text-shadow:0 0 10px var(--cy),0 0 40px rgba(0,255,247,.2);}
+        .gt::before,.gt::after{content:attr(data-t);position:absolute;left:0;top:0;width:100%;height:100%;}
+        .gt::before{color:var(--pk);animation:g1 4s infinite linear;text-shadow:none;}
+        .gt::after{color:var(--gn);animation:g2 4s infinite linear;text-shadow:none;}
+        .hero-sub{font-size:1.1rem;color:var(--t2);max-width:520px;line-height:1.7;margin-bottom:2rem;animation:fadeUp .6s ease .2s both;}
+        .hero-actions{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:3rem;animation:fadeUp .6s ease .3s both;}
+        .btn-play{font-family:var(--pxf);font-size:.65rem;background:var(--cy);color:var(--bg);padding:1rem 2rem;border:3px solid var(--cy);cursor:pointer;transition:all .3s;text-decoration:none;display:inline-flex;align-items:center;gap:.7rem;position:relative;overflow:hidden;}
+        .btn-play::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);transition:left .5s;}
+        .btn-play:hover::after{left:100%;}
+        .btn-play:hover{box-shadow:0 0 30px rgba(0,255,247,.5);transform:translateY(-2px);}
+        .btn-ghost{font-family:var(--pxf);font-size:.55rem;background:transparent;color:var(--t1);padding:1rem 1.5rem;border:2px solid var(--bd);cursor:pointer;transition:all .3s;text-decoration:none;display:inline-flex;align-items:center;gap:.5rem;}
+        .btn-ghost:hover{border-color:var(--pk);color:var(--pk);}
+        .hero-stats{display:flex;gap:2.5rem;padding-top:2rem;border-top:1px dashed var(--bd);animation:fadeUp .6s ease .5s both;}
+        .sv{font-family:var(--pxf);font-size:1rem;line-height:1;}
+        .sv.c{color:var(--cy);text-shadow:0 0 10px rgba(0,255,247,.3);}
+        .sv.p{color:var(--pk);text-shadow:0 0 10px rgba(255,45,107,.3);}
+        .sv.y{color:var(--yw);text-shadow:0 0 10px rgba(255,224,51,.3);}
+        .sl{font-size:.8rem;color:var(--t3);margin-top:.5rem;}
+
+        /* ============= GAME SECTION — REDESIGNED ============= */
+        .game-section{padding:4rem 2rem 5rem;position:relative;}
+        .game-section .s-inner{max-width:1100px;margin:0 auto;}
+
+        .game-wrapper{position:relative;max-width:800px;margin:2rem auto 0;}
+
+        /* Bar scene frame around the game */
+        .bar-frame{position:relative;border:3px solid #2a2540;background:#0a0812;overflow:hidden;border-radius:4px;
+            box-shadow:0 0 40px rgba(0,255,247,.1),0 20px 60px rgba(0,0,0,.5);}
+
+        /* The actual game canvas — enforced 16:9 aspect ratio */
+        .game-canvas-container{position:relative;width:100%;padding-top:56.25%;/* 16:9 */background:#000;}
+        .game-canvas-container canvas{position:absolute;top:0;left:0;width:100%;height:100%;display:block;}
+
+        /* HUD overlay on canvas */
+        .g-hud{position:absolute;top:0;left:0;right:0;padding:8px 12px;display:flex;justify-content:space-between;align-items:center;z-index:5;pointer-events:none;}
+        .g-hud span{font-family:var(--pxf);font-size:clamp(.45rem,1.2vw,.7rem);color:var(--yw);text-shadow:0 0 8px rgba(255,224,51,.6),0 1px 2px rgba(0,0,0,.8);}
+
+        /* Win overlay */
+        .win-overlay{position:absolute;inset:0;z-index:10;display:none;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,.85);backdrop-filter:blur(4px);}
+        .win-overlay.on{display:flex;}
+        .win-overlay h3{font-family:var(--pxf);font-size:clamp(.8rem,2vw,1.3rem);color:var(--gn);text-shadow:0 0 20px var(--gn);margin-bottom:.8rem;}
+        .win-overlay .prize-text{font-family:var(--pxf);font-size:clamp(.4rem,1vw,.65rem);color:var(--yw);margin-bottom:1.2rem;text-align:center;line-height:2;}
+        .win-btn{font-family:var(--pxf);font-size:clamp(.4rem,.9vw,.55rem);background:var(--cy);color:var(--bg);border:none;padding:.6rem 1.5rem;cursor:pointer;transition:all .3s;}
+        .win-btn:hover{box-shadow:0 0 20px rgba(0,255,247,.5);}
+
+        /* Bar ambient elements around the frame */
+        .bar-ambient{display:flex;justify-content:space-between;align-items:flex-end;padding:0 1rem;margin-top:-2px;position:relative;z-index:2;}
+        .bar-counter-strip{width:100%;height:24px;background:linear-gradient(180deg,#1a1530,#0f0d18);border-top:2px solid #2a2540;display:flex;align-items:center;justify-content:center;gap:2rem;padding:0 1rem;}
+        .bar-silhouette{display:flex;gap:4px;align-items:flex-end;}
+        .sil{background:#1a1828;border-radius:4px 4px 0 0;}
+        .sil.s1{width:14px;height:20px;}.sil.s2{width:10px;height:16px;}.sil.s3{width:12px;height:22px;}
+        .sil-head{width:8px;height:8px;background:#1a1828;border-radius:50%;margin:0 auto -2px;position:relative;top:-6px;}
+        .bar-glass{width:8px;height:12px;background:linear-gradient(180deg,rgba(255,200,50,.25),rgba(255,180,30,.1));border:1px solid rgba(255,200,50,.2);border-radius:1px;}
+
+        /* Game controls hint */
+        .game-controls{text-align:center;margin-top:1.2rem;}
+        .game-controls-hint{font-family:var(--pxf);font-size:.45rem;color:var(--t3);letter-spacing:.05em;}
+        .touch-controls{display:none;justify-content:center;margin-top:1rem;}
+        .touch-btn{width:100%;max-width:400px;height:60px;border:2px solid var(--cy);background:rgba(0,255,247,.08);color:var(--cy);font-family:var(--pxf);font-size:.7rem;cursor:pointer;display:flex;align-items:center;justify-content:center;user-select:none;-webkit-user-select:none;transition:all .1s;touch-action:manipulation;}
+        .touch-btn:active{background:rgba(0,255,247,.25);box-shadow:0 0 20px rgba(0,255,247,.3);}
+
+        /* SECTIONS */
+        section{padding:6rem 2rem;position:relative;}
+        .s-inner{max-width:1200px;margin:0 auto;}
+        .s-label{font-family:var(--pxf);font-size:.55rem;color:var(--pk);letter-spacing:.1em;margin-bottom:1rem;text-transform:uppercase;}
+        .s-title{font-family:var(--bf);font-weight:900;text-transform:uppercase;font-size:clamp(1.8rem,3.5vw,2.8rem);line-height:1.15;margin-bottom:1rem;}
+        .s-desc{font-size:1.05rem;color:var(--t2);max-width:550px;}
+        .reveal{opacity:0;transform:translateY(35px);transition:all .7s cubic-bezier(.16,1,.3,1);}
+        .reveal.vis{opacity:1;transform:translateY(0);}
+        .pixel-divider{display:flex;justify-content:center;gap:6px;padding:1rem 0;}
+        .pixel-divider span{width:8px;height:8px;display:block;}
+
+        .how-section{background:linear-gradient(180deg,var(--bg),#0d0d18,var(--bg));}
+        .steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3.5rem;}
+        .step-card{background:var(--bgc);border:2px solid var(--bd);padding:2rem 1.5rem;position:relative;overflow:hidden;transition:all .4s;}
+        .step-card::before{content:'';position:absolute;top:0;left:0;width:12px;height:12px;border-top:3px solid var(--cy);border-left:3px solid var(--cy);}
+        .step-card::after{content:'';position:absolute;bottom:0;right:0;width:12px;height:12px;border-bottom:3px solid var(--cy);border-right:3px solid var(--cy);}
+        .step-card:hover{border-color:rgba(0,255,247,.2);transform:translateY(-4px);}
+        .step-card:nth-child(2)::before,.step-card:nth-child(2)::after{border-color:var(--pk);}
+        .step-card:nth-child(3)::before,.step-card:nth-child(3)::after{border-color:var(--yw);}
+        .step-num{font-family:var(--pxf);font-size:2rem;color:rgba(0,255,247,.12);line-height:1;margin-bottom:1rem;}
+        .step-card:nth-child(2) .step-num{color:rgba(255,45,107,.12);}
+        .step-card:nth-child(3) .step-num{color:rgba(255,224,51,.12);}
+        .step-emoji{font-size:2rem;margin-bottom:.75rem;}
+        .step-card h3{font-weight:800;font-size:1.1rem;text-transform:uppercase;margin-bottom:.6rem;}
+        .step-card p{color:var(--t2);font-size:.9rem;line-height:1.7;}
+
+        .benefits-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;margin-top:3.5rem;}
+        .b-card{background:var(--bgc);border:2px solid var(--bd);padding:2rem;transition:all .4s;}
+        .b-card:hover{border-color:rgba(0,255,247,.15);background:var(--bgch);}
+        .b-card.wide{grid-column:1/-1;border-color:rgba(0,255,247,.15);background:linear-gradient(135deg,rgba(0,255,247,.03),rgba(255,45,107,.02));}
+        .b-icon{width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:1rem;border:2px solid var(--bd);}
+        .b-card h3{font-weight:800;font-size:1.05rem;text-transform:uppercase;margin-bottom:.5rem;}
+        .b-card p{color:var(--t2);font-size:.9rem;line-height:1.7;}
+
+        /* ============= ECONOMICS — CLEAN MIDDLE ============= */
+        .eco-section{background:linear-gradient(180deg,var(--bg),#08081a,var(--bg));}
+        .eco-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:3rem;margin-top:3.5rem;align-items:start;}
+        .eco-calc{background:var(--bgc);border:2px solid var(--bd);padding:2.5rem;position:relative;overflow:hidden;}
+        .eco-calc::before{content:'';position:absolute;top:-2px;left:-2px;right:-2px;height:4px;background:linear-gradient(90deg,var(--cy),var(--pk),var(--yw));}
+        .eco-calc-title{font-family:var(--pxf);font-size:.55rem;color:var(--cy);margin-bottom:1.5rem;letter-spacing:.05em;}
+        .eco-row{display:flex;justify-content:space-between;align-items:center;padding:.7rem 0;border-bottom:1px dashed rgba(255,255,255,.04);}
+        .eco-row:last-child{border-bottom:none;}
+        .eco-row.total{border-top:2px solid rgba(57,255,20,.3);border-bottom:none;padding-top:1rem;margin-top:.5rem;}
+        .eco-key{color:var(--t2);font-size:.9rem;display:flex;align-items:center;gap:.4rem;}
+        .eco-key .em{font-size:1rem;}
+        .eco-val{font-family:var(--pxf);font-size:.6rem;color:var(--t1);text-align:right;white-space:nowrap;}
+        .eco-val.dim{color:var(--t3);font-size:.5rem;}
+        .eco-val.hl{color:var(--cy);font-size:.7rem;text-shadow:0 0 10px rgba(0,255,247,.3);}
+        .eco-val.big{color:var(--gn);font-size:.85rem;text-shadow:0 0 15px rgba(57,255,20,.3);}
+        .eco-val.sub{display:block;font-size:.45rem;color:var(--cy);margin-top:.2rem;}
+        .eco-note{margin-top:1.5rem;padding:1rem;background:rgba(0,255,247,.04);border:1px dashed rgba(0,255,247,.15);font-size:.85rem;color:var(--t2);line-height:1.7;}
+        .eco-note strong{color:var(--cy);}
+        .eco-side{display:flex;flex-direction:column;gap:1.2rem;}
+        .eco-hi{display:flex;align-items:center;gap:1.2rem;background:var(--bgc);border:2px solid var(--bd);padding:1.3rem;transition:all .3s;}
+        .eco-hi:hover{border-color:rgba(0,255,247,.15);transform:translateX(4px);}
+        .eco-hi-num{font-family:var(--pxf);font-size:.9rem;color:var(--cy);min-width:80px;text-shadow:0 0 10px rgba(0,255,247,.3);}
+        .eco-hi-text{font-size:.85rem;color:var(--t2);line-height:1.5;}
+        .eco-hi-text strong{color:var(--t1);display:block;margin-bottom:.15rem;}
+
+        .proof-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3.5rem;}
+        .proof-card{background:var(--bgc);border:2px solid var(--bd);padding:2rem;transition:all .3s;}
+        .proof-card:hover{border-color:rgba(255,45,107,.15);}
+        .proof-stars{font-family:var(--pxf);font-size:.45rem;color:var(--yw);margin-bottom:1rem;}
+        .proof-text{color:var(--t2);font-size:.9rem;line-height:1.8;margin-bottom:1.2rem;font-style:italic;}
+        .proof-who{display:flex;align-items:center;gap:.7rem;}
+        .proof-ava{width:36px;height:36px;background:linear-gradient(135deg,var(--pk),var(--cy));display:flex;align-items:center;justify-content:center;font-family:var(--pxf);font-size:.45rem;color:var(--bg);}
+        .proof-name{font-weight:700;font-size:.85rem;}
+        .proof-role{font-size:.75rem;color:var(--t3);}
+
+        .gp-section{background:linear-gradient(180deg,var(--bg),#0d0d18);overflow:hidden;padding:6rem 2rem 4rem;}
+        .level-map{position:relative;max-width:1000px;margin:3.5rem auto 0;}
+        .lm-row{display:flex;align-items:center;position:relative;min-height:130px;}
+        .lm-row.rev{flex-direction:row-reverse;}
+        .lm-node{flex:0 0 auto;width:220px;position:relative;z-index:3;}
+        .lm-connector{flex:1;height:4px;position:relative;z-index:1;}
+        .lm-connector-inner{width:100%;height:100%;background:repeating-linear-gradient(90deg,var(--cy) 0 8px,transparent 8px 16px);}
+        .lm-row:nth-child(2) .lm-connector-inner{background:repeating-linear-gradient(90deg,var(--pk) 0 8px,transparent 8px 16px);}
+        .lm-row:nth-child(3) .lm-connector-inner{background:repeating-linear-gradient(90deg,var(--yw) 0 8px,transparent 8px 16px);}
+        .lm-row:nth-child(4) .lm-connector-inner{background:repeating-linear-gradient(90deg,var(--gn) 0 8px,transparent 8px 16px);}
+        .lm-card{background:var(--bgc);border:2px solid var(--bd);padding:1.2rem 1.5rem;position:relative;transition:all .4s;}
+        .lm-card:hover{transform:translateY(-4px);border-color:rgba(0,255,247,.2);}
+        .lm-flag{position:absolute;top:-18px;left:1.5rem;width:24px;height:16px;background:var(--cy);clip-path:polygon(0 0,100% 25%,100% 75%,0 100%);animation:flag-wave 2s ease-in-out infinite;}
+        .lm-row:nth-child(2) .lm-flag{background:var(--pk);}
+        .lm-row:nth-child(3) .lm-flag{background:var(--yw);}
+        .lm-row:nth-child(4) .lm-flag{background:var(--gn);}
+        .lm-stage{font-family:var(--pxf);font-size:.42rem;color:var(--cy);letter-spacing:.1em;margin-bottom:.5rem;}
+        .lm-row:nth-child(2) .lm-stage{color:var(--pk);}
+        .lm-row:nth-child(3) .lm-stage{color:var(--yw);}
+        .lm-row:nth-child(4) .lm-stage{color:var(--gn);}
+        .lm-title{font-weight:800;font-size:1rem;text-transform:uppercase;margin-bottom:.3rem;}
+        .lm-desc{color:var(--t2);font-size:.85rem;line-height:1.6;}
+        .lm-icon{position:absolute;top:50%;right:-35px;transform:translateY(-50%);font-size:1.5rem;animation:walk 1s ease-in-out infinite;}
+        .lm-row.rev .lm-icon{right:auto;left:-35px;}
+        .lm-spacer{flex:0 0 50px;}
+
+        .faq-list{max-width:800px;margin:3.5rem auto 0;}
+        .faq-item{border-bottom:1px dashed var(--bd);}
+        .faq-q{width:100%;background:none;border:none;color:var(--t1);padding:1.3rem 0;font-size:1rem;font-weight:700;text-align:left;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-family:var(--bf);transition:color .3s;text-transform:uppercase;}
+        .faq-q:hover{color:var(--cy);}
+        .faq-icon{font-family:var(--pxf);font-size:.7rem;color:var(--cy);transition:transform .3s;flex-shrink:0;margin-left:1rem;}
+        .faq-item.on .faq-icon{transform:rotate(45deg);color:var(--pk);}
+        .faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease;}
+        .faq-item.on .faq-a{max-height:300px;}
+        .faq-a p{color:var(--t2);line-height:1.8;font-size:.9rem;padding-bottom:1.3rem;}
+
+        .cta-section{padding:7rem 2rem;text-align:center;position:relative;overflow:hidden;}
+        .cta-bg{position:absolute;inset:0;background:radial-gradient(ellipse 50% 40% at 50% 50%,rgba(0,255,247,.06) 0%,transparent 70%);}
+        .cta-section .s-inner{position:relative;z-index:2;}
+
+        .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(10px);z-index:5000;align-items:center;justify-content:center;padding:2rem;}
+        .overlay.on{display:flex;}
+        .modal{background:var(--bgc);border:2px solid var(--cy);padding:2.5rem;max-width:480px;width:100%;position:relative;animation:crt-on .4s ease;}
+        .modal::before{content:'';position:absolute;top:-2px;left:-2px;right:-2px;height:4px;background:linear-gradient(90deg,var(--cy),var(--pk),var(--yw));}
+        .modal-x{position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--t3);font-family:var(--pxf);font-size:.8rem;cursor:pointer;transition:color .3s;}
+        .modal-x:hover{color:var(--pk);}
+        .modal h2{font-family:var(--pxf);font-size:.75rem;color:var(--cy);margin-bottom:.5rem;}
+        .modal .ms{color:var(--t2);margin-bottom:1.5rem;font-size:.9rem;}
+        .fg{margin-bottom:1rem;}
+        .fg label{display:block;font-family:var(--pxf);font-size:.4rem;color:var(--t3);margin-bottom:.5rem;letter-spacing:.1em;text-transform:uppercase;}
+        .fg input,.fg textarea{width:100%;padding:.8rem;background:var(--bg);border:2px solid var(--bd);color:var(--t1);font-size:.9rem;font-family:var(--bf);outline:none;transition:border-color .3s;}
+        .fg input:focus,.fg textarea:focus{border-color:var(--cy);box-shadow:0 0 10px rgba(0,255,247,.1);}
+        .fg textarea{resize:vertical;min-height:70px;}
+        .form-ok{display:none;text-align:center;padding:1.5rem 0;}
+        .form-ok.on{display:block;}.form-fields.off{display:none;}
+        .form-ok h3{font-family:var(--pxf);font-size:.7rem;color:var(--gn);margin-bottom:.5rem;}
+        .form-ok p{color:var(--t2);font-size:.9rem;}
+        .modal form{display:flex;flex-direction:column;gap:0;}
+        footer{padding:2.5rem 2rem;border-top:1px dashed var(--bd);text-align:center;}
+        footer p{font-family:var(--pxf);font-size:.4rem;color:var(--t3);}
+
+        @media(max-width:1024px){.nl{display:none;}.burger{display:flex;}}
+        @media(max-width:768px){
+            section{padding:4rem 1.2rem;}
+            .steps-grid,.benefits-grid,.proof-grid{grid-template-columns:1fr;}
+            .eco-grid{grid-template-columns:1fr;}
+            .hero{padding:6rem 1.2rem 3rem;}.hero-stats{flex-direction:column;gap:1.2rem;}
+            .touch-controls{display:flex;}
+            .lm-row,.lm-row.rev{flex-direction:column;min-height:auto;margin-bottom:1rem;}
+            .lm-connector{width:4px;height:30px;flex:none;}.lm-node{width:100%;}.lm-icon,.lm-spacer{display:none;}
+            .bar-ambient{display:none;}
+        }
+    </style>
+</head>
+<body>
+<div class="scroll-bar" id="sBar"></div>
+<nav id="nav">
+    <a href="#" class="logo">BAR<span class="pk">PLAY</span></a>
+    <div class="nl"><a href="#how">Как работает</a><a href="#benefits">Выгоды</a><a href="#eco">Экономика</a><a href="#faq">FAQ</a><a class="btn-cta" href="#" onclick="openM();return false;">START GAME</a></div>
+    <button class="burger" id="burger" onclick="togMenu()"><span></span><span></span><span></span></button>
+</nav>
+<div class="mob-menu" id="mm"><a href="#how" onclick="togMenu()">Как работает</a><a href="#benefits" onclick="togMenu()">Выгоды</a><a href="#eco" onclick="togMenu()">Экономика</a><a href="#faq" onclick="togMenu()">FAQ</a><a class="btn-cta" href="#" onclick="openM();togMenu();return false;" style="margin-top:1rem;">START GAME</a></div>
+
+<section class="hero">
+    <div class="hero-bg"></div><div class="pixel-rain" id="pxRain"></div>
+    <div class="hero-inner"><div>
+        <div class="hero-badge">PLAYER 1 — INSERT COIN</div>
+        <h1 class="hero-title">АРКАДА В ВАШЕМ БАРЕ<br><span class="gt" data-t="+10-15% К ВЫРУЧКЕ">+10-15% К ВЫРУЧКЕ</span></h1>
+        <p class="hero-sub">Гости покупают напиток, играют в Flappy Beer на проекторе и выигрывают призы. Мы привозим всё оборудование — от вас нужен только Wi-Fi.</p>
+        <div class="hero-actions"><a href="#" class="btn-play" onclick="openM();return false;">▶ ПОЛУЧИТЬ ДЕМО</a><a href="#game-demo" class="btn-ghost">🍺 ПОПРОБОВАТЬ ИГРУ</a></div>
+        <div class="hero-stats"><div><div class="sv c">+10-15%</div><div class="sl">к месячной выручке</div></div><div><div class="sv p">0 ₽</div><div class="sl">нужен только Wi-Fi</div></div><div><div class="sv y">1 ДЕНЬ</div><div class="sl">на полный запуск</div></div></div>
+    </div></div>
+</section>
+
+<div class="pixel-divider"><span style="background:var(--cy)"></span><span style="background:var(--pk)"></span><span style="background:var(--yw)"></span><span style="background:var(--gn)"></span><span style="background:var(--pr)"></span><span style="background:var(--cy)"></span></div>
+
+<!-- GAME -->
+<section class="game-section" id="game-demo">
+    <div class="s-inner">
+        <div class="s-label reveal" style="text-align:center;">// DEMO MODE</div>
+        <h2 class="s-title reveal" style="text-align:center;">ПОПРОБУЙТЕ САМИ — FLAPPY BEER</h2>
+        <p class="s-desc reveal" style="text-align:center;margin:0 auto;">Пролетите 10 труб и получите виртуальный бесплатный напиток. Именно так это видят гости в баре.</p>
+        <div class="game-wrapper reveal">
+            <div class="bar-frame">
+                <div class="game-canvas-container">
+                    <canvas id="gameCanvas"></canvas>
+                    <div class="g-hud"><span id="hudScore">SCORE: 0</span><span id="hudBest">BEST: 0</span></div>
+                    <div class="win-overlay" id="winOverlay">
+                        <h3>🍺 YOU WIN! 🍺</h3>
+                        <div class="prize-text">10 ТРУБ ПРОЙДЕНО!<br>ВАШ ПРИЗ — БЕСПЛАТНЫЙ НАПИТОК</div>
+                        <button class="win-btn" onclick="restartGame()">▶ ИГРАТЬ ЕЩЁ</button>
+                    </div>
+                </div>
+            </div>
+            <div class="bar-ambient">
+                <div class="bar-counter-strip">
+                    <div class="bar-silhouette"><div class="sil s1"><div class="sil-head"></div></div><div class="sil s2"><div class="sil-head"></div></div></div>
+                    <div class="bar-glass"></div><div class="bar-glass"></div>
+                    <div class="bar-silhouette"><div class="sil s3"><div class="sil-head"></div></div><div class="sil s1"><div class="sil-head"></div></div></div>
+                    <div class="bar-glass"></div>
+                    <div class="bar-silhouette"><div class="sil s2"><div class="sil-head"></div></div></div>
+                </div>
+            </div>
+        </div>
+        <div class="game-controls reveal"><div class="game-controls-hint">ПРОБЕЛ / КЛИК / TAP — ПРЫЖОК</div></div>
+        <div class="touch-controls" id="touchCtrl"><button class="touch-btn" ontouchstart="flap()" onmousedown="flap()">TAP — ПРЫЖОК 🍺</button></div>
+    </div>
+</section>
+
+<section class="how-section" id="how"><div class="s-inner">
+    <div class="s-label reveal">// LEVEL 1</div><h2 class="s-title reveal">КАК ЭТО РАБОТАЕТ</h2><p class="s-desc reveal">Три шага — и ваш бар уже не такой как все. От вас — только Wi-Fi.</p>
+    <div class="steps-grid">
+        <div class="step-card reveal"><div class="step-num">01</div><div class="step-emoji">🍺</div><h3>Гость покупает напиток</h3><p>Бармен подтверждает покупку — гость получает доступ к аркаде через смартфон.</p></div>
+        <div class="step-card reveal"><div class="step-num">02</div><div class="step-emoji">🎮</div><h3>Играет на проекторе</h3><p>Flappy Beer на большом экране. Одна кнопка. Весь бар видит и болеет.</p></div>
+        <div class="step-card reveal"><div class="step-num">03</div><div class="step-emoji">🏆</div><h3>Набирает очки = приз</h3><p>Пролетел 10 труб — бесплатный напиток. Не хватило — покупает ещё и пробует снова.</p></div>
+    </div>
+</div></section>
+
+<section id="benefits"><div class="s-inner">
+    <div class="s-label reveal">// POWER-UPS</div><h2 class="s-title reveal">ЗАЧЕМ ЭТО ВАШЕМУ БАРУ</h2>
+    <div class="benefits-grid">
+        <div class="b-card wide reveal"><div class="b-icon">📈</div><h3>+10-15% к месячной выручке</h3><p>Каждая игра — дополнительная покупка напитка. При средней загрузке 30-60 игр в день — ощутимый рост. Точный расчёт — в блоке экономики ниже.</p></div>
+        <div class="b-card reveal"><div class="b-icon">📦</div><h3>Мы привозим всё</h3><p>Проектор, оборудование, софт — всё наше. От вас — только Wi-Fi.</p></div>
+        <div class="b-card reveal"><div class="b-icon">📣</div><h3>Вирусный маркетинг</h3><p>«Я играл в Flappy Beer и выиграл пиво!» — бесплатная реклама от гостей.</p></div>
+        <div class="b-card reveal"><div class="b-icon">🤝</div><h3>Гибкие условия</h3><p>Процент, сложность, модель оплаты — подстраиваем под вашу экономику.</p></div>
+        <div class="b-card reveal"><div class="b-icon">🛡️</div><h3>Ноль рисков</h3><p>Бесплатный тест. Не сработало — забираем всё без обязательств.</p></div>
+    </div>
+</div></section>
+
+<!-- ECONOMICS — MIDDLE GROUND -->
+<section class="eco-section" id="eco"><div class="s-inner">
+    <div class="s-label reveal" style="text-align:center;">// HIGH SCORE</div>
+    <h2 class="s-title reveal" style="text-align:center;">ЭКОНОМИКА — ПРОЗРАЧНО</h2>
+    <p class="s-desc reveal" style="text-align:center;margin:0 auto;">Пример расчёта для среднего бара. Точные цифры рассчитаем бесплатно под ваше заведение.</p>
+    <div class="eco-grid">
+        <div class="eco-calc reveal">
+            <div class="eco-calc-title">► ПРИМЕР: ПИВО 0.5Л / 350₽</div>
+            <div class="eco-row"><div class="eco-key"><span class="em">🍺</span> Цена напитка → маржа бара</div><div class="eco-val">350₽ → <span style="color:var(--cy)">250₽</span></div></div>
+            <div class="eco-row"><div class="eco-key"><span class="em">🎯</span> Шанс выигрыша (настраиваемый)</div><div class="eco-val">20%</div></div>
+            <div class="eco-row"><div class="eco-key"><span class="em">💰</span> Чистая прибыль бара с 1 игры</div><div class="eco-val hl">230 ₽</div></div>
+            <div class="eco-row"><div class="eco-key"><span class="em">📅</span> Игр в месяц (будни + выходные)</div><div class="eco-val">~1 140</div></div>
+            <div class="eco-row"><div class="eco-key"><span class="em">🎁</span> Из них выигрышей (напитки в подарок)</div><div class="eco-val dim">~228 шт</div></div>
+            <div class="eco-row total"><div class="eco-key"><span class="em">🏆</span> <strong>Доп. прибыль бара в месяц</strong></div><div><div class="eco-val big">+262 200 ₽</div><div class="eco-val sub">≈ +10-15% к выручке</div></div></div>
+            <div class="eco-note"><strong>⚡ Все параметры гибкие:</strong> шанс выигрыша (15-30%), сложность, партнёрские условия — подбираем под вашу экономику. Точный расчёт на бесплатной демо-встрече.</div>
+        </div>
+        <div class="eco-side">
+            <div class="eco-hi reveal"><div class="eco-hi-num">Wi-Fi</div><div class="eco-hi-text"><strong>Всё что нужно от вас</strong>Оборудование и проектор — наши</div></div>
+            <div class="eco-hi reveal"><div class="eco-hi-num">1 140</div><div class="eco-hi-text"><strong>Игр в среднем баре / мес</strong>30 в будни + 60 в выходные в день</div></div>
+            <div class="eco-hi reveal"><div class="eco-hi-num">15-30%</div><div class="eco-hi-text"><strong>Настраиваемый шанс</strong>Баланс азарта гостей и прибыли бара</div></div>
+            <div class="eco-hi reveal"><div class="eco-hi-num">∞</div><div class="eco-hi-text"><strong>Гибкость условий</strong>Процент, модель, параметры — всё под вас</div></div>
+        </div>
+    </div>
+</div></section>
+
+<section><div class="s-inner">
+    <div class="s-label reveal" style="text-align:center;">// LEADERBOARD</div><h2 class="s-title reveal" style="text-align:center;">ЧТО ГОВОРЯТ ВЛАДЕЛЬЦЫ</h2>
+    <div class="proof-grid">
+        <div class="proof-card reveal"><div class="proof-stars">★ ★ ★ ★ ★</div><p class="proof-text">«Гости залипают. В пятницу очередь — каждый берёт напиток чтобы сыграть. Выручка за первый месяц выросла на 12%.»</p><div class="proof-who"><div class="proof-ava">AK</div><div><div class="proof-name">Алексей К.</div><div class="proof-role">Крафтовый бар, Москва</div></div></div></div>
+        <div class="proof-card reveal"><div class="proof-stars">★ ★ ★ ★ ★</div><p class="proof-text">«Привезли всё сами, поставили за полдня. Бармены разобрались за 10 минут. Теперь наша фишка.»</p><div class="proof-who"><div class="proof-ava">MД</div><div><div class="proof-name">Марина Д.</div><div class="proof-role">Паб, Санкт-Петербург</div></div></div></div>
+        <div class="proof-card reveal"><div class="proof-stars">★ ★ ★ ★ ★</div><p class="proof-text">«Нулевой риск решил. Попробовали — ставим во все точки. Гости приводят друзей.»</p><div class="proof-who"><div class="proof-ava">ДB</div><div><div class="proof-name">Дмитрий В.</div><div class="proof-role">Сеть баров, Казань</div></div></div></div>
+    </div>
+</div></section>
+
+<section class="gp-section" id="start"><div class="s-inner">
+    <div class="s-label reveal" style="text-align:center;">// GAME PLAN</div><h2 class="s-title reveal" style="text-align:center;">КАК НАЧАТЬ ИГРАТЬ</h2><p class="s-desc reveal" style="text-align:center;margin:0 auto;">От заявки до первых игр — 1 рабочий день.</p>
+    <div class="level-map">
+        <div class="lm-row reveal"><div class="lm-spacer"></div><div class="lm-node"><div class="lm-card"><div class="lm-flag"></div><div class="lm-stage">STAGE 1 — ЗАЯВКА</div><div class="lm-title">🎯 Оставьте заявку</div><div class="lm-desc">Заполните форму — свяжемся в тот же день.</div></div><div class="lm-icon">🏃</div></div><div class="lm-connector"><div class="lm-connector-inner"></div></div></div>
+        <div class="lm-row rev reveal"><div class="lm-spacer"></div><div class="lm-node"><div class="lm-card"><div class="lm-flag"></div><div class="lm-stage">STAGE 2 — ДЕМО</div><div class="lm-title">📺 Бесплатная демонстрация</div><div class="lm-desc">Покажем систему и рассчитаем экономику под ваши цены.</div></div><div class="lm-icon">🎮</div></div><div class="lm-connector"><div class="lm-connector-inner"></div></div></div>
+        <div class="lm-row reveal"><div class="lm-spacer"></div><div class="lm-node"><div class="lm-card"><div class="lm-flag"></div><div class="lm-stage">STAGE 3 — УСТАНОВКА</div><div class="lm-title">🔧 Мы привозим и настраиваем</div><div class="lm-desc">Проектор, софт — всё наше. Обучаем персонал за 10 минут.</div></div><div class="lm-icon">⚡</div></div><div class="lm-connector"><div class="lm-connector-inner"></div></div></div>
+        <div class="lm-row rev reveal"><div class="lm-spacer"></div><div class="lm-node"><div class="lm-card" style="border-color:rgba(57,255,20,.3);background:linear-gradient(135deg,rgba(57,255,20,.05),transparent);"><div class="lm-flag"></div><div class="lm-stage">BOSS LEVEL — ПРИБЫЛЬ</div><div class="lm-title">💰 Бар зарабатывает больше</div><div class="lm-desc">Гости играют, покупают напитки, приводят друзей.</div></div><div class="lm-icon">🏆</div></div><div class="lm-connector"><div class="lm-connector-inner"></div></div></div>
+    </div>
+</div></section>
+
+<section id="faq"><div class="s-inner">
+    <div class="s-label reveal" style="text-align:center;">// HELP MENU</div><h2 class="s-title reveal" style="text-align:center;">ЧАСТЫЕ ВОПРОСЫ</h2>
+    <div class="faq-list">
+        <div class="faq-item reveal"><button class="faq-q">Что нужно от бара? <span class="faq-icon">+</span></button><div class="faq-a"><p>Только Wi-Fi. Проектор, оборудование, софт — всё привозим мы.</p></div></div>
+        <div class="faq-item reveal"><button class="faq-q">Какие условия и сколько стоит? <span class="faq-icon">+</span></button><div class="faq-a"><p>Условия гибкие — процент, сложность, модель оплаты подбираем под вас. Стартовых платежей нет.</p></div></div>
+        <div class="faq-item reveal"><button class="faq-q">Сложно ли обучить персонал? <span class="faq-icon">+</span></button><div class="faq-a"><p>10 минут. Одно нажатие — гость играет. Система автоматизирована.</p></div></div>
+        <div class="faq-item reveal"><button class="faq-q">Если гостям не понравится? <span class="faq-icon">+</span></button><div class="faq-a"><p>Бесплатный тест. Не сработало — забираем всё без обязательств.</p></div></div>
+        <div class="faq-item reveal"><button class="faq-q">Нужно ли покупать проектор? <span class="faq-icon">+</span></button><div class="faq-a"><p>Нет. Мы привозим всё оборудование. От вас — только Wi-Fi.</p></div></div>
+        <div class="faq-item reveal"><button class="faq-q">Какая именно игра? <span class="faq-icon">+</span></button><div class="faq-a"><p>Flappy Beer — аркада на одну кнопку. Раунд 15-30 секунд. Попробуйте демо на этой странице. Регулярно добавляем новые режимы.</p></div></div>
+    </div>
+</div></section>
+
+<div class="pixel-divider" style="padding-top:3rem;"><span style="background:var(--cy)"></span><span style="background:var(--pk)"></span><span style="background:var(--yw)"></span><span style="background:var(--gn)"></span></div>
+
+<section class="cta-section"><div class="cta-bg"></div><div class="s-inner">
+    <h2 class="s-title reveal" style="text-align:center;">READY PLAYER ONE?</h2>
+    <p class="s-desc reveal" style="text-align:center;margin:0 auto 2rem;">Оставьте заявку — покажем демо и рассчитаем прибыль под ваш бар.</p>
+    <div class="reveal" style="text-align:center;"><a href="#" class="btn-play" onclick="openM();return false;" style="font-size:.75rem;padding:1.1rem 2.5rem;">▶ НАЧАТЬ ИГРУ</a></div>
+</div></section>
+
+<footer><p>© 2026 BARPLAY — GAME OVER? NEVER. ★</p></footer>
+
+<div class="overlay" id="ov"><div class="modal">
+    <button class="modal-x" onclick="closeM()">✕</button>
+    <div class="form-fields" id="ff">
+        <h2>► INSERT COIN</h2><p class="ms">Заполните форму — свяжемся в течение 2 часов.</p>
+        <!-- Honeypot — hidden from humans, catches bots -->
+        <div style="position:absolute;left:-9999px;"><input type="text" name="website" id="fHoney" tabindex="-1" autocomplete="off"></div>
+        <div class="fg"><label>Ваше имя</label><input type="text" placeholder="Как к вам обращаться?" id="fN" required></div>
+        <div class="fg"><label>Телефон или Telegram</label><input type="text" placeholder="+7 (___) ___-__-__" id="fP" required></div>
+        <div class="fg"><label>Название заведения</label><input type="text" placeholder="Бар / паб / ресторан" id="fB"></div>
+        <div class="fg"><label>Город</label><input type="text" placeholder="Москва" id="fC"></div>
+        <div class="fg"><label>Комментарий</label><textarea placeholder="Любые вопросы..." id="fCo"></textarea></div>
+        <button class="btn-play" style="width:100%;justify-content:center;" id="fBtn" onclick="submitF()">▶ ОТПРАВИТЬ ЗАЯВКУ</button>
+    </div>
+    <div class="form-ok" id="fOk"><div style="font-size:2.5rem;margin-bottom:.75rem;">🎮</div><h3>GAME ON!</h3><p>Заявка отправлена. Свяжемся в ближайшее время.</p></div>
+</div></div>
+
+<script>
+window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('sc',scrollY>60);document.getElementById('sBar').style.width=(scrollY/(document.body.scrollHeight-innerHeight))*100+'%';});
+function togMenu(){document.getElementById('burger').classList.toggle('on');document.getElementById('mm').classList.toggle('on');document.body.style.overflow=document.getElementById('mm').classList.contains('on')?'hidden':'';}
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis');});},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+document.querySelectorAll('.faq-q').forEach(b=>{b.addEventListener('click',()=>{const i=b.parentElement,w=i.classList.contains('on');document.querySelectorAll('.faq-item').forEach(x=>x.classList.remove('on'));if(!w)i.classList.add('on');});});
+function openM(){document.getElementById('ov').classList.add('on');document.body.style.overflow='hidden';}
+function closeM(){document.getElementById('ov').classList.remove('on');document.body.style.overflow='';}
+document.getElementById('ov').addEventListener('click',e=>{if(e.target===e.currentTarget)closeM();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeM();});
+function submitF(){
+    const n=document.getElementById('fN').value.trim();
+    const p=document.getElementById('fP').value.trim();
+    if(!n||!p){alert('Укажите имя и телефон');return;}
+    const btn=document.getElementById('fBtn');
+    btn.textContent='⏳ ОТПРАВКА...';btn.disabled=true;
+    fetch('/api/send',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+            name:n,
+            phone:p,
+            bar:document.getElementById('fB').value.trim(),
+            city:document.getElementById('fC').value.trim(),
+            comment:document.getElementById('fCo').value.trim(),
+            website:document.getElementById('fHoney').value
+        })
+    })
+    .then(r=>r.json()).then(d=>{
+        if(d.ok){
+            document.getElementById('ff').classList.add('off');
+            document.getElementById('fOk').classList.add('on');
+        }else{
+            alert('Ошибка: '+(d.error||'Попробуйте позже'));
+            btn.textContent='▶ ОТПРАВИТЬ ЗАЯВКУ';btn.disabled=false;
+        }
+    }).catch(()=>{
+        alert('Ошибка сети. Попробуйте позже или напишите в Telegram.');
+        btn.textContent='▶ ОТПРАВИТЬ ЗАЯВКУ';btn.disabled=false;
+    });
+}
+const rain=document.getElementById('pxRain');
+if(rain){const c=['#FF2D6B','#00FFF7','#FFE033','#39FF14','#B026FF'];for(let i=0;i<20;i++){const d=document.createElement('div');d.className='pixel-drop';d.style.left=Math.random()*100+'%';d.style.background=c[~~(Math.random()*c.length)];d.style.animationDuration=(5+Math.random()*10)+'s';d.style.animationDelay=Math.random()*8+'s';d.style.opacity=.3+Math.random()*.4;rain.appendChild(d);}}
+
+// ============= FLAPPY BEER — ORIGINAL FB PHYSICS =============
+// Based on original Flappy Bird values (288×512 canvas @60fps):
+//   gravity = 0.5 px/frame², flap = -8 px/frame, pipe_speed = 2 px/frame
+//   pipe_gap = 90px, bird = 34×24px
+// Converted to normalised 0..1 coords for adaptive canvas.
+// State machine: idle → ready → play → dead / won (like MMarQs)
+// Fixed-timestep loop: physics always run at 60 logical fps.
+
+const canvas = document.getElementById('gameCanvas');
+if (canvas) {
+const ctx = canvas.getContext('2d');
+let CW, CH;
+
+function resize() {
+    const r = canvas.parentElement.getBoundingClientRect();
+    CW = Math.floor(r.width); CH = Math.floor(r.height);
+    canvas.width = CW; canvas.height = CH;
+}
+resize();
+window.addEventListener('resize', resize);
+
+// ---------- constants (original values → normalised) ----------
+// Y-axis normalised to canvas height (512px original)
+// X-axis normalised to canvas width  (288px original)
+const GRAVITY     =  0.5  / 512;   // 0.000977 per tick
+const FLAP_VEL    = -8    / 512;   // −0.01563 per tick
+const MAX_FALL    =  10   / 512;   // terminal velocity
+const BIRD_W      =  24   / 288;   // ~0.083
+const BIRD_H      =  34   / 512;   // ~0.066  (we use square-ish mug ≈ 0.055)
+const BIRD_X      =  0.15;
+const BIRD_SIZE   =  0.055;        // visual size of beer mug
+const PIPE_W      =  52   / 288;   // ~0.18 (narrowed for playability)
+const PIPE_GAP_Y  =  100  / 512;   // ~0.195 (slightly wider than original 90px for landscape)
+const PIPE_SPEED  =  2    / 288;   // ~0.00694 per tick
+const PIPE_SPAWN  =  180  / 288;   // horizontal spacing between pipes ≈ 0.625
+const GROUND_H    =  0.025;
+const TARGET_FPS  =  60;
+const TICK_MS     =  1000 / TARGET_FPS;
+
+// make pipe visually narrower so landscape doesn't feel cramped
+const G_PIPE_W    = 0.085;
+const G_PIPE_GAP  = 0.22;          // forgiving gap for landscape
+const G_PIPE_SPD  = 0.005;         // slightly slower for wide screen
+
+let bird, pipes, score, best = 0, state, stars, ticks;
+let lastTime = 0, accumulator = 0;
+
+// ---------- init ----------
+function init() {
+    bird  = { y: 0.40, vy: 0, angle: 0 };
+    pipes = [];
+    score = 0;
+    state = 'idle';       // idle → ready → play → dead / won
+    ticks = 0;
+    stars = Array.from({ length: 40 }, () => ({
+        x: Math.random(), y: Math.random(), s: 0.5 + Math.random()
+    }));
+    document.getElementById('hudScore').textContent = 'SCORE: 0';
+}
+init();
+
+// ---------- pipe factory ----------
+function addPipe() {
+    const minTop = 0.08;
+    const maxTop = 0.72 - G_PIPE_GAP;
+    const topEnd = minTop + Math.random() * (maxTop - minTop);
+    pipes.push({
+        x: 1.15,                     // spawn just off-screen right
+        topEnd: topEnd,
+        botStart: topEnd + G_PIPE_GAP,
+        scored: false
+    });
+}
+
+// ---------- input ----------
+function doFlap() {
+    if (state === 'idle') {
+        state = 'ready';              // show "Get Ready" – bird bobs
+    } else if (state === 'ready') {
+        state = 'play';               // first real flap → start physics
+        bird.vy = FLAP_VEL;
+        ticks = 0;
+        addPipe();                    // first pipe
+    } else if (state === 'play') {
+        bird.vy = FLAP_VEL;          // regular flap
+    } else if (state === 'dead') {
+        // Instant restart — skip idle/ready, go straight to playing
+        init();
+        state = 'play';
+        bird.vy = FLAP_VEL;
+        ticks = 0;
+        addPipe();
+    }
+}
+window.flap = doFlap;
+
+document.addEventListener('keydown', e => {
+    if (e.key === ' ' || e.key === 'ArrowUp') { e.preventDefault(); doFlap(); }
+});
+canvas.addEventListener('click', e => { e.preventDefault(); doFlap(); });
+canvas.addEventListener('touchstart', e => { e.preventDefault(); doFlap(); }, { passive: false });
+
+// ---------- fixed-step physics ----------
+function physicsTick() {
+    if (state === 'ready') {
+        // Bird bobs gently – no gravity, no pipes
+        bird.y = 0.40 + Math.sin(ticks * 0.05) * 0.018;
+        bird.angle = 0;
+        ticks++;
+        return;
+    }
+    if (state !== 'play') return;
+
+    // Gravity (original: vy += 0.5 each frame)
+    bird.vy += GRAVITY;
+    if (bird.vy > MAX_FALL) bird.vy = MAX_FALL;
+    bird.y += bird.vy;
+
+    // Bird rotation (like MMarQs / original):
+    //   rising → tilt up (−25°)  |  falling → tilt down toward +90°
+    if (bird.vy < 0) {
+        bird.angle = -0.44;                       // ≈ −25° in radians
+    } else {
+        // gradually rotate down
+        bird.angle += 0.035;                       // ~2° per frame
+        if (bird.angle > 1.57) bird.angle = 1.57;  // cap at 90°
+    }
+
+    // Pipe spawning
+    const spawnInterval = Math.round(PIPE_SPAWN / G_PIPE_SPD);
+    if (ticks > 0 && ticks % spawnInterval === 0) addPipe();
+
+    // Hitbox (slightly forgiving)
+    const bx1 = BIRD_X + BIRD_SIZE * 0.1;
+    const bx2 = BIRD_X + BIRD_SIZE * 0.65;
+    const by1 = bird.y + BIRD_SIZE * 0.05;
+    const by2 = bird.y + BIRD_SIZE * 0.9;
+
+    for (let i = 0; i < pipes.length; i++) {
+        const p = pipes[i];
+        p.x -= G_PIPE_SPD;
+
+        // Score
+        if (!p.scored && p.x + G_PIPE_W < BIRD_X) {
+            p.scored = true;
+            score++;
+            document.getElementById('hudScore').textContent = 'SCORE: ' + score;
+            if (score >= 10) {
+                state = 'won';
+                best = Math.max(best, score);
+                document.getElementById('hudBest').textContent = 'BEST: ' + best;
+                document.getElementById('winOverlay').classList.add('on');
+                return;
+            }
+        }
+
+        // Collision with pipe
+        if (bx2 > p.x && bx1 < p.x + G_PIPE_W) {
+            if (by1 < p.topEnd || by2 > p.botStart) {
+                die(); return;
+            }
+        }
+    }
+    pipes = pipes.filter(p => p.x > -G_PIPE_W - 0.05);
+
+    // Floor / ceiling
+    if (bird.y < -BIRD_SIZE * 0.3 || bird.y + BIRD_SIZE > 1 - GROUND_H) {
+        die(); return;
+    }
+
+    ticks++;
+}
+
+function die() {
+    state = 'dead';
+    best = Math.max(best, score);
+    document.getElementById('hudBest').textContent = 'BEST: ' + best;
+}
+
+// ---------- drawing helpers ----------
+function px(v) { return v * CW; }
+function py(v) { return v * CH; }
+function drawRect(vx, vy, vw, vh, col) {
+    ctx.fillStyle = col;
+    ctx.fillRect(px(vx), py(vy), px(vw), py(vh));
+}
+
+function drawBeer(bx, by, bs, angle) {
+    const cx = px(bx + bs * 0.4), cy = py(by + bs * 0.5);
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(angle || 0);
+    ctx.translate(-cx, -cy);
+    // Mug body
+    drawRect(bx, by, bs * 0.75, bs, '#FFE033');
+    drawRect(bx + bs * 0.05, by, bs * 0.65, bs * 0.15, '#FFF5AA');
+    // Handle
+    drawRect(bx + bs * 0.75, by + bs * 0.15, bs * 0.25, bs * 0.12, '#cca020');
+    drawRect(bx + bs * 0.88, by + bs * 0.27, bs * 0.12, bs * 0.35, '#cca020');
+    drawRect(bx + bs * 0.75, by + bs * 0.62, bs * 0.25, bs * 0.12, '#cca020');
+    // Beer inside
+    drawRect(bx + bs * 0.1, by + bs * 0.2, bs * 0.55, bs * 0.7, '#dd9500');
+    // Foam
+    drawRect(bx, by - bs * 0.15, bs * 0.75, bs * 0.2, '#fff');
+    drawRect(bx + bs * 0.1, by - bs * 0.28, bs * 0.4, bs * 0.15, '#fff');
+    ctx.restore();
+}
+
+// ---------- render (runs at screen refresh rate) ----------
+function render(now) {
+    requestAnimationFrame(render);
+    if (!lastTime) { lastTime = now; return; }
+
+    // Fixed timestep accumulator → physics always 60 "ticks" per second
+    const dt = Math.min(now - lastTime, 50);   // cap spike at 50ms
+    lastTime = now;
+    accumulator += dt;
+    while (accumulator >= TICK_MS) {
+        physicsTick();
+        accumulator -= TICK_MS;
+    }
+
+    // --- draw ---
+    ctx.fillStyle = '#05051a';
+    ctx.fillRect(0, 0, CW, CH);
+
+    // Stars
+    stars.forEach(s => {
+        s.y += s.s * 0.0003;
+        if (s.y > 1) { s.y = 0; s.x = Math.random(); }
+        drawRect(s.x, s.y, 0.003, 0.004, `rgba(255,255,255,${0.15 + s.s * 0.2})`);
+    });
+
+    // Ground
+    drawRect(0, 1 - GROUND_H, 1, GROUND_H, '#1a1530');
+    drawRect(0, 1 - GROUND_H, 1, 0.003, '#2a2540');
+
+    // Scrolling ground texture
+    if (state === 'play' || state === 'ready') {
+        const gOff = (ticks * 1.5) % 20;
+        for (let i = 0; i < CW / 10 + 2; i++) {
+            ctx.fillStyle = 'rgba(255,255,255,.03)';
+            ctx.fillRect(i * 10 - gOff, py(1 - GROUND_H + 0.008), 5, py(0.003));
+        }
+    }
+
+    // Pipes
+    pipes.forEach(p => {
+        // Top pipe
+        drawRect(p.x, 0, G_PIPE_W, p.topEnd, '#2a6a2a');
+        drawRect(p.x - 0.005, p.topEnd - 0.03, G_PIPE_W + 0.01, 0.03, '#3a8a3a');
+        // Bottom pipe
+        drawRect(p.x, p.botStart, G_PIPE_W, 1 - p.botStart - GROUND_H, '#2a6a2a');
+        drawRect(p.x - 0.005, p.botStart, G_PIPE_W + 0.01, 0.03, '#3a8a3a');
+        // Pipe shine
+        drawRect(p.x + 0.015, 0, 0.012, p.topEnd, 'rgba(255,255,255,.04)');
+        drawRect(p.x + 0.015, p.botStart, 0.012, 1 - p.botStart - GROUND_H, 'rgba(255,255,255,.04)');
+    });
+
+    // Bird (always visible except after death)
+    if (state !== 'dead') {
+        drawBeer(BIRD_X, bird.y, BIRD_SIZE, bird.angle);
+    }
+
+    // ---------- UI overlays ----------
+    ctx.textAlign = 'center';
+    const fz = Math.max(10, CW * 0.04);
+
+    if (state === 'idle') {
+        ctx.fillStyle = '#FFE033';
+        ctx.font = `${fz * 1.5}px "Press Start 2P",monospace`;
+        ctx.fillText('FLAPPY', CW / 2, CH * 0.31);
+        ctx.fillText('BEER', CW / 2, CH * 0.31 + fz * 1.8);
+
+        ctx.fillStyle = 'rgba(255,255,255,.5)';
+        ctx.font = `${fz * 0.6}px "Press Start 2P",monospace`;
+        ctx.fillText('TAP TO START', CW / 2, CH * 0.56);
+
+        // Bobbing beer icon
+        const bob = Math.sin(Date.now() / 300) * CH * 0.012;
+        drawBeer(0.46, 0.6 + bob / CH, 0.07, 0);
+    }
+
+    if (state === 'ready') {
+        ctx.fillStyle = '#00FFF7';
+        ctx.font = `${fz * 1.2}px "Press Start 2P",monospace`;
+        ctx.fillText('GET READY', CW / 2, CH * 0.22);
+
+        ctx.fillStyle = 'rgba(255,255,255,.45)';
+        ctx.font = `${fz * 0.5}px "Press Start 2P",monospace`;
+        ctx.fillText('TAP TO FLY', CW / 2, CH * 0.30);
+
+        // Animated tap arrow
+        const arr = Math.sin(Date.now() / 200) * CH * 0.008;
+        ctx.fillStyle = 'rgba(0,255,247,.35)';
+        ctx.beginPath();
+        ctx.moveTo(CW / 2, CH * 0.72 + arr);
+        ctx.lineTo(CW / 2 - 12, CH * 0.74 + arr);
+        ctx.lineTo(CW / 2 + 12, CH * 0.74 + arr);
+        ctx.fill();
+    }
+
+    if (state === 'play') {
+        // Large score in centre top (like original FB)
+        ctx.fillStyle = 'rgba(255,224,51,.9)';
+        ctx.font = `${fz * 1.6}px "Press Start 2P",monospace`;
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = 'rgba(0,0,0,.4)';
+        ctx.strokeText('' + score, CW / 2, CH * 0.12);
+        ctx.fillText('' + score, CW / 2, CH * 0.12);
+    }
+
+    if (state === 'dead') {
+        ctx.fillStyle = 'rgba(0,0,0,.65)';
+        ctx.fillRect(0, 0, CW, CH);
+
+        ctx.fillStyle = '#FF2D6B';
+        ctx.font = `${fz * 1.3}px "Press Start 2P",monospace`;
+        ctx.fillText('GAME OVER', CW / 2, CH * 0.35);
+
+        ctx.fillStyle = '#FFE033';
+        ctx.font = `${fz * 0.7}px "Press Start 2P",monospace`;
+        ctx.fillText('SCORE: ' + score, CW / 2, CH * 0.46);
+
+        if (best > 0) {
+            ctx.fillStyle = 'rgba(0,255,247,.6)';
+            ctx.font = `${fz * 0.5}px "Press Start 2P",monospace`;
+            ctx.fillText('BEST: ' + best, CW / 2, CH * 0.53);
+        }
+
+        ctx.fillStyle = 'rgba(255,255,255,.5)';
+        ctx.font = `${fz * 0.5}px "Press Start 2P",monospace`;
+        ctx.fillText('TAP TO RETRY', CW / 2, CH * 0.64);
+    }
+
+    ctx.textAlign = 'left';
+}
+
+requestAnimationFrame(render);
+
+window.restartGame = function() {
+    init();
+    document.getElementById('winOverlay').classList.remove('on');
+    document.getElementById('hudScore').textContent = 'SCORE: 0';
+};
+
+if ('ontouchstart' in window) document.getElementById('touchCtrl').style.display = 'flex';
+}
+</script>
+</body>
+</html>
