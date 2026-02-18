@@ -188,31 +188,8 @@
         .proof-role{font-size:.75rem;color:var(--t3);}
 
         .gp-section{background:linear-gradient(180deg,var(--bg),#0d0d18);overflow:hidden;padding:6rem 2rem 4rem;}
-        .level-map{position:relative;max-width:1000px;margin:3.5rem auto 0;}
-        .lm-row{display:flex;align-items:center;position:relative;min-height:130px;}
-        .lm-row.rev{flex-direction:row-reverse;}
-        .lm-node{flex:0 0 auto;width:220px;position:relative;z-index:3;}
-        .lm-connector{flex:1;height:4px;position:relative;z-index:1;}
-        .lm-connector-inner{width:100%;height:100%;background:repeating-linear-gradient(90deg,var(--cy) 0 8px,transparent 8px 16px);}
-        .lm-row:nth-child(2) .lm-connector-inner{background:repeating-linear-gradient(90deg,var(--pk) 0 8px,transparent 8px 16px);}
-        .lm-row:nth-child(3) .lm-connector-inner{background:repeating-linear-gradient(90deg,var(--yw) 0 8px,transparent 8px 16px);}
-        .lm-row:nth-child(4) .lm-connector-inner{background:repeating-linear-gradient(90deg,var(--gn) 0 8px,transparent 8px 16px);}
-        .lm-card{background:var(--bgc);border:2px solid var(--bd);padding:1.2rem 1.5rem;position:relative;transition:all .4s;}
-        .lm-card:hover{transform:translateY(-4px);border-color:rgba(0,255,247,.2);}
-        .lm-flag{position:absolute;top:-18px;left:1.5rem;width:24px;height:16px;background:var(--cy);clip-path:polygon(0 0,100% 25%,100% 75%,0 100%);animation:flag-wave 2s ease-in-out infinite;}
-        .lm-row:nth-child(2) .lm-flag{background:var(--pk);}
-        .lm-row:nth-child(3) .lm-flag{background:var(--yw);}
-        .lm-row:nth-child(4) .lm-flag{background:var(--gn);}
-        .lm-stage{font-family:var(--pxf);font-size:.42rem;color:var(--cy);letter-spacing:.1em;margin-bottom:.5rem;}
-        .lm-row:nth-child(2) .lm-stage{color:var(--pk);}
-        .lm-row:nth-child(3) .lm-stage{color:var(--yw);}
-        .lm-row:nth-child(4) .lm-stage{color:var(--gn);}
-        .lm-title{font-weight:800;font-size:1rem;text-transform:uppercase;margin-bottom:.3rem;}
-        .lm-desc{color:var(--t2);font-size:.85rem;line-height:1.6;}
-        .lm-icon{position:absolute;top:50%;right:-35px;transform:translateY(-50%);font-size:1.5rem;animation:walk 1s ease-in-out infinite;}
-        .lm-row.rev .lm-icon{right:auto;left:-35px;}
-        .lm-spacer{flex:0 0 50px;}
-
+        .dk-wrapper{position:relative;max-width:900px;margin:3rem auto 0;border:4px solid #E84080;border-radius:2px;background:#000;box-shadow:0 0 60px rgba(232,64,128,.15),0 0 120px rgba(0,216,216,.08),0 20px 60px rgba(0,0,0,.6);}
+        .dk-wrapper canvas{display:block;width:100%;height:auto;}
         .faq-list{max-width:800px;margin:3.5rem auto 0;}
         .faq-item{border-bottom:1px dashed var(--bd);}
         .faq-q{width:100%;background:none;border:none;color:var(--t1);padding:1.3rem 0;font-size:1rem;font-weight:700;text-align:left;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-family:var(--bf);transition:color .3s;text-transform:uppercase;}
@@ -332,31 +309,35 @@
         <div class="b-card reveal"><div class="b-icon">📦</div><h3>Мы привозим всё</h3><p>Проектор, оборудование, софт — всё наше. От вас — только Wi-Fi.</p></div>
         <div class="b-card reveal"><div class="b-icon">📣</div><h3>Вирусный маркетинг</h3><p>«Я играл в Flappy Beer и выиграл пиво!» — бесплатная реклама от гостей.</p></div>
         <div class="b-card reveal"><div class="b-icon">🤝</div><h3>Гибкие условия</h3><p>Процент, сложность, модель оплаты — подстраиваем под вашу экономику.</p></div>
-        <div class="b-card reveal"><div class="b-icon">🛡️</div><h3>Ноль рисков</h3><p>Бесплатный тест. Не сработало — забираем всё без обязательств.</p></div>
+        <div class="b-card reveal"><div class="b-icon">🛡️</div><h3>Без вложений</h3><p>Тестируйте бесплатно. Не понравилось — просто скажите, заберём оборудование.</p></div>
     </div>
 </div></section>
 
-<!-- ECONOMICS — MIDDLE GROUND -->
+<!-- ECONOMICS — NEW MODEL: 100₽ PER GAME -->
 <section class="eco-section" id="eco"><div class="s-inner">
     <div class="s-label reveal" style="text-align:center;">// HIGH SCORE</div>
     <h2 class="s-title reveal" style="text-align:center;">ЭКОНОМИКА — ПРОЗРАЧНО</h2>
-    <p class="s-desc reveal" style="text-align:center;margin:0 auto;">Пример расчёта для среднего бара. Точные цифры рассчитаем бесплатно под ваше заведение.</p>
+    <p class="s-desc reveal" style="text-align:center;margin:0 auto;">Гость платит 100₽ за игру. Выиграл — получает пиво. Проиграл — платит ещё.</p>
     <div class="eco-grid">
         <div class="eco-calc reveal">
-            <div class="eco-calc-title">► ПРИМЕР: ПИВО 0.5Л / 350₽</div>
-            <div class="eco-row"><div class="eco-key"><span class="em">🍺</span> Цена напитка → маржа бара</div><div class="eco-val">350₽ → <span style="color:var(--cy)">250₽</span></div></div>
+            <div class="eco-calc-title">► ЦИКЛ ОДНОЙ ИГРЫ: 100₽</div>
+            <div class="eco-row"><div class="eco-key"><span class="em">🎮</span> Гость платит за игру</div><div class="eco-val" style="color:var(--yw)">100 ₽</div></div>
             <div class="eco-row"><div class="eco-key"><span class="em">🎯</span> Шанс выигрыша (настраиваемый)</div><div class="eco-val">20%</div></div>
-            <div class="eco-row"><div class="eco-key"><span class="em">💰</span> Чистая прибыль бара с 1 игры</div><div class="eco-val hl">230 ₽</div></div>
-            <div class="eco-row"><div class="eco-key"><span class="em">📅</span> Игр в месяц (будни + выходные)</div><div class="eco-val">~1 140</div></div>
-            <div class="eco-row"><div class="eco-key"><span class="em">🎁</span> Из них выигрышей (напитки в подарок)</div><div class="eco-val dim">~228 шт</div></div>
-            <div class="eco-row total"><div class="eco-key"><span class="em">🏆</span> <strong>Доп. прибыль бара в месяц</strong></div><div><div class="eco-val big">+262 200 ₽</div><div class="eco-val sub">≈ +10-15% к выручке</div></div></div>
-            <div class="eco-note"><strong>⚡ Все параметры гибкие:</strong> шанс выигрыша (15-30%), сложность, партнёрские условия — подбираем под вашу экономику. Точный расчёт на бесплатной демо-встрече.</div>
+            <div class="eco-row"><div class="eco-key"><span class="em">🍺</span> Приз — пиво 0.5л (себест. бара)</div><div class="eco-val dim">−20 ₽/игра</div></div>
+            <div class="eco-row"><div class="eco-key"><span class="em">📊</span> Чистая прибыль с 1 игры</div><div class="eco-val hl">80 ₽</div></div>
+            <div class="eco-row"><div class="eco-key"><span class="em">🤝</span> Комиссия BARPLAY (30%)</div><div class="eco-val dim">−24 ₽</div></div>
+            <div class="eco-row total"><div class="eco-key"><span class="em">💰</span> <strong>ИТОГО БАРУ с каждой игры</strong></div><div><div class="eco-val big">56 ₽</div></div></div>
+            <div style="height:1px;background:rgba(255,255,255,.04);margin:1rem 0;"></div>
+            <div class="eco-row"><div class="eco-key"><span class="em">📅</span> Игр в месяц (30 будни + 60 выходные)</div><div class="eco-val">~1 140</div></div>
+            <div class="eco-row"><div class="eco-key"><span class="em">🎁</span> Из них выигрышей</div><div class="eco-val dim">~228 шт</div></div>
+            <div class="eco-row total"><div class="eco-key"><span class="em">🏆</span> <strong>Доход бара в месяц</strong></div><div><div class="eco-val big">+63 840 ₽</div><div class="eco-val sub">≈ 741 720 ₽ за год</div></div></div>
+            <div class="eco-note"><strong>⚡ Все параметры гибкие:</strong> цена игры, шанс выигрыша (15-30%), приз — подбираем под ваш бар. Точный расчёт на бесплатной демо-встрече.</div>
         </div>
         <div class="eco-side">
-            <div class="eco-hi reveal"><div class="eco-hi-num">Wi-Fi</div><div class="eco-hi-text"><strong>Всё что нужно от вас</strong>Оборудование и проектор — наши</div></div>
+            <div class="eco-hi reveal"><div class="eco-hi-num">100₽</div><div class="eco-hi-text"><strong>Цена одной игры</strong>Отдельный продукт, не зависит от напитков</div></div>
+            <div class="eco-hi reveal"><div class="eco-hi-num">56₽</div><div class="eco-hi-text"><strong>Чистыми бару с каждой игры</strong>После призов и комиссии BARPLAY</div></div>
             <div class="eco-hi reveal"><div class="eco-hi-num">1 140</div><div class="eco-hi-text"><strong>Игр в среднем баре / мес</strong>30 в будни + 60 в выходные в день</div></div>
-            <div class="eco-hi reveal"><div class="eco-hi-num">15-30%</div><div class="eco-hi-text"><strong>Настраиваемый шанс</strong>Баланс азарта гостей и прибыли бара</div></div>
-            <div class="eco-hi reveal"><div class="eco-hi-num">∞</div><div class="eco-hi-text"><strong>Гибкость условий</strong>Процент, модель, параметры — всё под вас</div></div>
+            <div class="eco-hi reveal"><div class="eco-hi-num">0 ₽</div><div class="eco-hi-text"><strong>Вложений от бара</strong>Оборудование и проектор — наши</div></div>
         </div>
     </div>
 </div></section>
@@ -372,11 +353,8 @@
 
 <section class="gp-section" id="start"><div class="s-inner">
     <div class="s-label reveal" style="text-align:center;">// GAME PLAN</div><h2 class="s-title reveal" style="text-align:center;">КАК НАЧАТЬ ИГРАТЬ</h2><p class="s-desc reveal" style="text-align:center;margin:0 auto;">От заявки до первых игр — 1 рабочий день.</p>
-    <div class="level-map">
-        <div class="lm-row reveal"><div class="lm-spacer"></div><div class="lm-node"><div class="lm-card"><div class="lm-flag"></div><div class="lm-stage">STAGE 1 — ЗАЯВКА</div><div class="lm-title">🎯 Оставьте заявку</div><div class="lm-desc">Заполните форму — свяжемся в тот же день.</div></div><div class="lm-icon">🏃</div></div><div class="lm-connector"><div class="lm-connector-inner"></div></div></div>
-        <div class="lm-row rev reveal"><div class="lm-spacer"></div><div class="lm-node"><div class="lm-card"><div class="lm-flag"></div><div class="lm-stage">STAGE 2 — ДЕМО</div><div class="lm-title">📺 Бесплатная демонстрация</div><div class="lm-desc">Покажем систему и рассчитаем экономику под ваши цены.</div></div><div class="lm-icon">🎮</div></div><div class="lm-connector"><div class="lm-connector-inner"></div></div></div>
-        <div class="lm-row reveal"><div class="lm-spacer"></div><div class="lm-node"><div class="lm-card"><div class="lm-flag"></div><div class="lm-stage">STAGE 3 — УСТАНОВКА</div><div class="lm-title">🔧 Мы привозим и настраиваем</div><div class="lm-desc">Проектор, софт — всё наше. Обучаем персонал за 10 минут.</div></div><div class="lm-icon">⚡</div></div><div class="lm-connector"><div class="lm-connector-inner"></div></div></div>
-        <div class="lm-row rev reveal"><div class="lm-spacer"></div><div class="lm-node"><div class="lm-card" style="border-color:rgba(57,255,20,.3);background:linear-gradient(135deg,rgba(57,255,20,.05),transparent);"><div class="lm-flag"></div><div class="lm-stage">BOSS LEVEL — ПРИБЫЛЬ</div><div class="lm-title">💰 Бар зарабатывает больше</div><div class="lm-desc">Гости играют, покупают напитки, приводят друзей.</div></div><div class="lm-icon">🏆</div></div><div class="lm-connector"><div class="lm-connector-inner"></div></div></div>
+    <div class="dk-wrapper reveal">
+        <canvas id="dkCanvas"></canvas>
     </div>
 </div></section>
 
@@ -386,7 +364,7 @@
         <div class="faq-item reveal"><button class="faq-q">Что нужно от бара? <span class="faq-icon">+</span></button><div class="faq-a"><p>Только Wi-Fi. Проектор, оборудование, софт — всё привозим мы.</p></div></div>
         <div class="faq-item reveal"><button class="faq-q">Какие условия и сколько стоит? <span class="faq-icon">+</span></button><div class="faq-a"><p>Условия гибкие — процент, сложность, модель оплаты подбираем под вас. Стартовых платежей нет.</p></div></div>
         <div class="faq-item reveal"><button class="faq-q">Сложно ли обучить персонал? <span class="faq-icon">+</span></button><div class="faq-a"><p>10 минут. Одно нажатие — гость играет. Система автоматизирована.</p></div></div>
-        <div class="faq-item reveal"><button class="faq-q">Если гостям не понравится? <span class="faq-icon">+</span></button><div class="faq-a"><p>Бесплатный тест. Не сработало — забираем всё без обязательств.</p></div></div>
+        <div class="faq-item reveal"><button class="faq-q">Если гостям не понравится? <span class="faq-icon">+</span></button><div class="faq-a"><p>Тестируйте бесплатно. Не понравилось — просто скажите, заберём оборудование. Вы ничего не платите.</p></div></div>
         <div class="faq-item reveal"><button class="faq-q">Нужно ли покупать проектор? <span class="faq-icon">+</span></button><div class="faq-a"><p>Нет. Мы привозим всё оборудование. От вас — только Wi-Fi.</p></div></div>
         <div class="faq-item reveal"><button class="faq-q">Какая именно игра? <span class="faq-icon">+</span></button><div class="faq-a"><p>Flappy Beer — аркада на одну кнопку. Раунд 15-30 секунд. Попробуйте демо на этой странице. Регулярно добавляем новые режимы.</p></div></div>
     </div>
@@ -502,11 +480,12 @@ const TARGET_FPS  =  60;
 const TICK_MS     =  1000 / TARGET_FPS;
 
 // make pipe visually narrower so landscape doesn't feel cramped
-const G_PIPE_W    = 0.085;
-const G_PIPE_GAP  = 0.22;          // forgiving gap for landscape
+const G_PIPE_W    = 0.12;
+const G_PIPE_GAP  = 0.24;          // slightly wider gap for wider hands
 const G_PIPE_SPD  = 0.005;         // slightly slower for wide screen
 
 let bird, pipes, score, best = 0, state, stars, ticks;
+let deathByHand = false;
 let lastTime = 0, accumulator = 0;
 
 // ---------- init ----------
@@ -516,6 +495,7 @@ function init() {
     score = 0;
     state = 'idle';       // idle → ready → play → dead / won
     ticks = 0;
+    deathByHand = false;
     stars = Array.from({ length: 40 }, () => ({
         x: Math.random(), y: Math.random(), s: 0.5 + Math.random()
     }));
@@ -618,10 +598,10 @@ function physicsTick() {
             }
         }
 
-        // Collision with pipe
+        // Collision with hand
         if (bx2 > p.x && bx1 < p.x + G_PIPE_W) {
             if (by1 < p.topEnd || by2 > p.botStart) {
-                die(); return;
+                die('hand'); return;
             }
         }
     }
@@ -629,14 +609,15 @@ function physicsTick() {
 
     // Floor / ceiling
     if (bird.y < -BIRD_SIZE * 0.3 || bird.y + BIRD_SIZE > 1 - GROUND_H) {
-        die(); return;
+        die('fall'); return;
     }
 
     ticks++;
 }
 
-function die() {
+function die(reason) {
     state = 'dead';
+    deathByHand = (reason === 'hand');
     best = Math.max(best, score);
     document.getElementById('hudBest').textContent = 'BEST: ' + best;
 }
@@ -708,17 +689,56 @@ function render(now) {
         }
     }
 
-    // Pipes
+    // Hands (replacing pipes) — reaching for the beer
+    const handTime = Date.now() / 1000;
     pipes.forEach(p => {
-        // Top pipe
-        drawRect(p.x, 0, G_PIPE_W, p.topEnd, '#2a6a2a');
-        drawRect(p.x - 0.005, p.topEnd - 0.03, G_PIPE_W + 0.01, 0.03, '#3a8a3a');
-        // Bottom pipe
-        drawRect(p.x, p.botStart, G_PIPE_W, 1 - p.botStart - GROUND_H, '#2a6a2a');
-        drawRect(p.x - 0.005, p.botStart, G_PIPE_W + 0.01, 0.03, '#3a8a3a');
-        // Pipe shine
-        drawRect(p.x + 0.015, 0, 0.012, p.topEnd, 'rgba(255,255,255,.04)');
-        drawRect(p.x + 0.015, p.botStart, 0.012, 1 - p.botStart - GROUND_H, 'rgba(255,255,255,.04)');
+        const armColor = '#D2915A';
+        const armDark = '#B07040';
+        const sleeve = '#1a1a3a';
+        const grab = Math.sin(handTime * 3 + p.x * 20) * 0.008; // grabbing animation
+        
+        // === TOP HAND (reaching down) ===
+        // Arm/sleeve from top
+        drawRect(p.x + 0.01, 0, G_PIPE_W - 0.02, p.topEnd - 0.06, sleeve);
+        // Rolled-up sleeve cuff
+        drawRect(p.x, p.topEnd - 0.07, G_PIPE_W, 0.025, '#2a2a5a');
+        // Forearm (skin)
+        drawRect(p.x + 0.005, p.topEnd - 0.045, G_PIPE_W - 0.01, 0.035, armColor);
+        // Hand — open palm reaching down
+        const topHandY = p.topEnd - 0.015 + grab;
+        // Palm
+        drawRect(p.x - 0.008, topHandY, G_PIPE_W + 0.016, 0.025, armColor);
+        // Fingers (4 fingers reaching down)
+        for(let f = 0; f < 4; f++){
+            const fx = p.x - 0.005 + f * (G_PIPE_W + 0.01) / 4;
+            const fLen = 0.018 + Math.sin(handTime*4 + f*1.5) * 0.004;
+            drawRect(fx, topHandY + 0.022, 0.018, fLen, armColor);
+            // Fingertip darker
+            drawRect(fx + 0.003, topHandY + 0.022 + fLen - 0.005, 0.012, 0.005, armDark);
+        }
+        // Thumb (on side)
+        drawRect(p.x + G_PIPE_W + 0.005, topHandY + 0.005, 0.015, 0.018 + grab, armColor);
+        
+        // === BOTTOM HAND (reaching up) ===
+        // Arm/sleeve from bottom
+        drawRect(p.x + 0.01, p.botStart + 0.06, G_PIPE_W - 0.02, 1 - p.botStart - GROUND_H - 0.06, sleeve);
+        // Sleeve cuff
+        drawRect(p.x, p.botStart + 0.04, G_PIPE_W, 0.025, '#2a2a5a');
+        // Forearm (skin)
+        drawRect(p.x + 0.005, p.botStart + 0.01, G_PIPE_W - 0.01, 0.035, armColor);
+        // Hand — open palm reaching up
+        const botHandY = p.botStart - 0.01 - grab;
+        // Palm
+        drawRect(p.x - 0.008, botHandY, G_PIPE_W + 0.016, 0.025, armColor);
+        // Fingers (4 fingers reaching up)
+        for(let f = 0; f < 4; f++){
+            const fx = p.x - 0.005 + f * (G_PIPE_W + 0.01) / 4;
+            const fLen = 0.018 + Math.sin(handTime*4 + f*1.5 + 2) * 0.004;
+            drawRect(fx, botHandY - fLen, 0.018, fLen, armColor);
+            drawRect(fx + 0.003, botHandY - fLen, 0.012, 0.005, armDark);
+        }
+        // Thumb
+        drawRect(p.x + G_PIPE_W + 0.005, botHandY + 0.002, 0.015, 0.018 + grab, armColor);
     });
 
     // Bird (always visible except after death)
@@ -780,21 +800,32 @@ function render(now) {
 
         ctx.fillStyle = '#FF2D6B';
         ctx.font = `${fz * 1.3}px "Press Start 2P",monospace`;
-        ctx.fillText('GAME OVER', CW / 2, CH * 0.35);
+        ctx.fillText('GAME OVER', CW / 2, CH * 0.30);
+
+        // Hand grabbed your beer message
+        if(deathByHand){
+            ctx.fillStyle = '#FF6B2D';
+            ctx.font = `${fz * 0.5}px "Press Start 2P",monospace`;
+            ctx.fillText('ТВОЁ ПИВО ЗАБРАЛ', CW / 2, CH * 0.39);
+            ctx.fillText('ДРУГОЙ ГОСТЬ!', CW / 2, CH * 0.44);
+            // Grabbing hand emoji
+            ctx.font = `${fz * 1.5}px sans-serif`;
+            ctx.fillText('🤚🍺', CW / 2, CH * 0.53);
+        }
 
         ctx.fillStyle = '#FFE033';
         ctx.font = `${fz * 0.7}px "Press Start 2P",monospace`;
-        ctx.fillText('SCORE: ' + score, CW / 2, CH * 0.46);
+        ctx.fillText('SCORE: ' + score, CW / 2, deathByHand ? CH * 0.62 : CH * 0.46);
 
         if (best > 0) {
             ctx.fillStyle = 'rgba(0,255,247,.6)';
             ctx.font = `${fz * 0.5}px "Press Start 2P",monospace`;
-            ctx.fillText('BEST: ' + best, CW / 2, CH * 0.53);
+            ctx.fillText('BEST: ' + best, CW / 2, deathByHand ? CH * 0.69 : CH * 0.53);
         }
 
         ctx.fillStyle = 'rgba(255,255,255,.5)';
         ctx.font = `${fz * 0.5}px "Press Start 2P",monospace`;
-        ctx.fillText('TAP TO RETRY', CW / 2, CH * 0.64);
+        ctx.fillText('TAP TO RETRY', CW / 2, deathByHand ? CH * 0.78 : CH * 0.64);
     }
 
     ctx.textAlign = 'left';
@@ -810,6 +841,953 @@ window.restartGame = function() {
 
 if ('ontouchstart' in window) document.getElementById('touchCtrl').style.display = 'flex';
 }
+</script>
+<script>
+// ==========================================
+// DONKEY KONG STYLE — GAME PLAN ROADMAP
+// Classic DK visual recreation
+// ==========================================
+(function(){
+const canvas = document.getElementById('dkCanvas');
+if(!canvas) return;
+const ctx = canvas.getContext('2d');
+
+const W = 900, H = 750;
+canvas.width = W; canvas.height = H;
+
+// ---- Classic DK Color Palette ----
+const PK = '#E84080';   // platform pink/magenta
+const PKD = '#B03060';  // darker pink
+const CY = '#00D8D8';   // cyan ladders
+const CYD = '#009898';  // darker cyan
+const BG = '#000000';   // pure black background
+const WHT = '#FFFFFF';
+const RED = '#E02020';  // Mario red
+const BLUE = '#3030D0'; // Mario blue
+const SKIN = '#F0A060'; // skin tone
+const BROWN = '#B06020';// DK brown
+const BROWND= '#804010';
+const ORANGE= '#E88040';// DK lighter
+const BARREL_C = '#E08830';
+const BARREL_D = '#905020';
+const BARREL_B = '#FFD040';
+const GRN = '#39FF14';
+const YLW = '#FFE033';
+
+// ---- Platform layout (7 platforms, classic DK style) ----
+const PLAT_H = 12;
+const platforms = [
+    {y:690, tilt: 0.012, dir: 1},   // 0: bottom — Mario starts
+    {y:585, tilt:-0.012, dir:-1},   // 1: stage 1
+    {y:480, tilt: 0.012, dir: 1},   // 2: stage 2
+    {y:375, tilt:-0.012, dir:-1},   // 3: stage 3
+    {y:270, tilt: 0.012, dir: 1},   // 4: stage 4
+    {y:170, tilt: 0,     dir: 0},   // 5: DK platform (left side only)
+    {y:90,  tilt: 0,     dir: 0},   // 6: TOP — prize platform (short, center-right)
+];
+
+// Stage labels attached to platforms
+const stages = [
+    {platIdx:1, label:'STAGE 1', title:'ЗАЯВКА',     desc:'Заполните форму', color:'#FF2D6B', icon:'📋'},
+    {platIdx:2, label:'STAGE 2', title:'ДЕМО',        desc:'Покажем систему',  color:'#00FFF7', icon:'📺'},
+    {platIdx:3, label:'STAGE 3', title:'УСТАНОВКА',   desc:'Привозим за 1 день', color:'#FFE033', icon:'🔧'},
+    {platIdx:4, label:'ПОБЕДА!', title:'ПРИБЫЛЬ',     desc:'+63 840₽/мес бару',  color:'#39FF14', icon:'💰'},
+];
+
+// Ladders
+const ladders = [
+    {x:740, p1:0, p2:1},
+    {x:160, p1:1, p2:2},
+    {x:680, p1:2, p2:3},
+    {x:200, p1:3, p2:4},
+    {x:350, p1:4, p2:5},   // up to DK level
+    {x:420, p1:5, p2:6},   // final ladder to prize!
+];
+
+// ---- Draw functions ----
+
+function platY(pIdx, x){
+    const p = platforms[pIdx];
+    return p.y + (x - W/2) * p.tilt;
+}
+
+function drawPlatformRow(p, startX, endX){
+    // Classic DK pink zigzag girder pattern
+    for(let x = startX; x < endX; x += 8){
+        const py = Math.round(p.y + (x - W/2) * p.tilt);
+        // Main girder body
+        ctx.fillStyle = PK;
+        ctx.fillRect(x, py, 8, PLAT_H);
+        // Triangle pattern (zigzag)
+        ctx.fillStyle = PKD;
+        const triPhase = ((x/8)|0) % 2;
+        if(triPhase === 0){
+            // Downward triangle
+            ctx.beginPath();
+            ctx.moveTo(x, py+2);
+            ctx.lineTo(x+8, py+2);
+            ctx.lineTo(x+4, py+PLAT_H-2);
+            ctx.closePath();
+            ctx.fill();
+        } else {
+            // Upward triangle
+            ctx.beginPath();
+            ctx.moveTo(x+4, py+2);
+            ctx.lineTo(x, py+PLAT_H-2);
+            ctx.lineTo(x+8, py+PLAT_H-2);
+            ctx.closePath();
+            ctx.fill();
+        }
+    }
+}
+
+function drawAllPlatforms(){
+    for(let i=0; i<platforms.length; i++){
+        if(i === 5){
+            // DK platform — left side only
+            drawPlatformRow(platforms[i], 30, 470);
+        } else if(i === 6){
+            // Prize platform — short, center-right (like princess platform in original)
+            drawPlatformRow(platforms[i], 350, 580);
+        } else {
+            drawPlatformRow(platforms[i], 30, W-30);
+        }
+    }
+}
+
+function drawLadder(l){
+    const p1 = platforms[l.p1];
+    const p2 = platforms[l.p2];
+    const topY = Math.round(p2.y + (l.x - W/2)*p2.tilt) + PLAT_H;
+    const botY = Math.round(p1.y + (l.x - W/2)*p1.tilt);
+    const h = botY - topY;
+    const lw = 22;
+    // Rails
+    ctx.fillStyle = CYD;
+    ctx.fillRect(l.x, topY, 3, h);
+    ctx.fillRect(l.x+lw-3, topY, 3, h);
+    // Rungs
+    ctx.fillStyle = CY;
+    for(let ry = topY + 8; ry < botY - 4; ry += 12){
+        ctx.fillRect(l.x+3, ry, lw-6, 3);
+    }
+}
+
+// ---- Donkey Kong (gorilla) ----
+function drawDK(x, y, frame){
+    const s = 5; // pixel scale
+    ctx.save();
+    ctx.translate(Math.round(x), Math.round(y));
+    
+    // Body (big brown mass)
+    ctx.fillStyle = BROWN;
+    ctx.fillRect(-s*5, -s*6, s*10, s*7);
+    // Chest lighter
+    ctx.fillStyle = ORANGE;
+    ctx.fillRect(-s*3, -s*4, s*6, s*4);
+    
+    // Head
+    ctx.fillStyle = BROWN;
+    ctx.fillRect(-s*3, -s*10, s*6, s*4);
+    // Face
+    ctx.fillStyle = SKIN;
+    ctx.fillRect(-s*2, -s*9, s*4, s*3);
+    // Eyes
+    ctx.fillStyle = WHT;
+    ctx.fillRect(-s*1.5, -s*8.5, s*1, s*1);
+    ctx.fillRect(s*0.5, -s*8.5, s*1, s*1);
+    ctx.fillStyle = '#000';
+    ctx.fillRect(-s*1.2, -s*8.2, s*0.5, s*0.5);
+    ctx.fillRect(s*0.7, -s*8.2, s*0.5, s*0.5);
+    // Mouth
+    ctx.fillStyle = BROWND;
+    ctx.fillRect(-s*1, -s*7, s*2, s*0.5);
+    
+    // Arms — animate throwing
+    const armSwing = Math.sin(frame * 2) * 3;
+    ctx.fillStyle = BROWN;
+    // Left arm
+    ctx.fillRect(-s*7, -s*5 + armSwing, s*2, s*5);
+    // Right arm (holding barrel area)
+    ctx.fillRect(s*5, -s*5 - armSwing, s*2, s*5);
+    
+    // Legs
+    ctx.fillStyle = BROWND;
+    ctx.fillRect(-s*4, s*1, s*3, s*3);
+    ctx.fillRect(s*1, s*1, s*3, s*3);
+    // Feet
+    ctx.fillStyle = BROWN;
+    ctx.fillRect(-s*5, s*3, s*4, s*2);
+    ctx.fillRect(s*1, s*3, s*4, s*2);
+    
+    ctx.restore();
+}
+
+// ---- Barrel stack next to DK ----
+function drawBarrelStack(x, y){
+    for(let i=0; i<3; i++){
+        const bx = x - 15 + (i%2)*8;
+        const by = y - i*20;
+        drawBarrelStatic(bx, by);
+    }
+}
+
+function drawBarrelStatic(x, y){
+    ctx.fillStyle = BARREL_C;
+    ctx.fillRect(x-12, y-9, 24, 18);
+    ctx.fillStyle = BARREL_D;
+    ctx.fillRect(x-12, y-9, 24, 3);
+    ctx.fillRect(x-12, y+6, 24, 3);
+    ctx.fillStyle = BARREL_B;
+    ctx.fillRect(x-12, y-1, 24, 2);
+}
+
+// ---- Mario (red cap, blue overalls, pixel art) ----
+function drawMario(x, y, climbing, walkFrame, dir){
+    const s = 3;
+    ctx.save();
+    ctx.translate(Math.round(x), Math.round(y));
+    
+    if(hero.jumping && !climbing){
+        // JUMP pose — arms up, legs tucked
+        // Hat
+        ctx.fillStyle = RED;
+        ctx.fillRect(-s*2, -s*11, s*5, s*2);
+        // Head
+        ctx.fillStyle = SKIN;
+        ctx.fillRect(-s*2, -s*9, s*4, s*3);
+        // Eye
+        ctx.fillStyle = '#000';
+        if(dir > 0) ctx.fillRect(s*0.5, -s*8, s*1, s*1);
+        else ctx.fillRect(-s*1.5, -s*8, s*1, s*1);
+        // Body
+        ctx.fillStyle = RED;
+        ctx.fillRect(-s*2, -s*6, s*4, s*2);
+        // Overalls
+        ctx.fillStyle = BLUE;
+        ctx.fillRect(-s*2, -s*4, s*4, s*3);
+        // Arms UP
+        ctx.fillStyle = SKIN;
+        ctx.fillRect(-s*3, -s*8, s*1, s*3);
+        ctx.fillRect(s*2, -s*8, s*1, s*3);
+        // Legs tucked
+        ctx.fillStyle = BLUE;
+        ctx.fillRect(-s*2, -s*1, s*1.5, s*1.5);
+        ctx.fillRect(s*0.5, -s*1, s*1.5, s*1.5);
+        // Boots
+        ctx.fillStyle = BROWN;
+        ctx.fillRect(-s*2.5, s*0.5, s*2, s*1);
+        ctx.fillRect(s*0.5, s*0.5, s*2, s*1);
+    } else if(climbing){
+        const armOff = Math.sin(walkFrame*0.5)*2;
+        // Hat
+        ctx.fillStyle = RED;
+        ctx.fillRect(-s*2, -s*10, s*4, s*2);
+        // Head/face
+        ctx.fillStyle = SKIN;
+        ctx.fillRect(-s*2, -s*8, s*4, s*3);
+        // Eyes
+        ctx.fillStyle = '#000';
+        ctx.fillRect(-s*1, -s*7, s*0.8, s*0.8);
+        ctx.fillRect(s*0.2, -s*7, s*0.8, s*0.8);
+        // Body (overalls)
+        ctx.fillStyle = BLUE;
+        ctx.fillRect(-s*2, -s*5, s*4, s*4);
+        // Arms reaching
+        ctx.fillStyle = RED;
+        ctx.fillRect(-s*3, -s*6+armOff, s*1, s*3);
+        ctx.fillRect(s*2, -s*6-armOff, s*1, s*3);
+        // Legs
+        ctx.fillStyle = BLUE;
+        ctx.fillRect(-s*2, -s*1, s*1.5, s*2);
+        ctx.fillRect(s*0.5, -s*1, s*1.5, s*2);
+        // Boots
+        ctx.fillStyle = BROWN;
+        ctx.fillRect(-s*2, s*1, s*2, s*1);
+        ctx.fillRect(s*0, s*1, s*2, s*1);
+    } else {
+        const legAnim = Math.sin(walkFrame*0.6)*2;
+        // Hat
+        ctx.fillStyle = RED;
+        ctx.fillRect(-s*2, -s*10, s*5, s*2);
+        if(dir > 0) ctx.fillRect(s*1, -s*10, s*2, s*1); // brim right
+        else ctx.fillRect(-s*3, -s*10, s*2, s*1); // brim left
+        // Head
+        ctx.fillStyle = SKIN;
+        ctx.fillRect(-s*2, -s*8, s*4, s*3);
+        // Eye
+        ctx.fillStyle = '#000';
+        if(dir > 0) ctx.fillRect(s*0.5, -s*7, s*1, s*1);
+        else ctx.fillRect(-s*1.5, -s*7, s*1, s*1);
+        // Mustache
+        ctx.fillStyle = BROWND;
+        ctx.fillRect(-s*1, -s*5.5, s*2, s*0.5);
+        // Body
+        ctx.fillStyle = RED;
+        ctx.fillRect(-s*2, -s*5, s*4, s*2);
+        // Overalls
+        ctx.fillStyle = BLUE;
+        ctx.fillRect(-s*2, -s*3, s*4, s*3);
+        // Arms
+        ctx.fillStyle = SKIN;
+        ctx.fillRect(-s*3, -s*5, s*1, s*3);
+        ctx.fillRect(s*2, -s*5, s*1, s*3);
+        // Legs
+        ctx.fillStyle = BLUE;
+        ctx.fillRect(-s*1.5, 0, s*1.2, s*2+legAnim);
+        ctx.fillRect(s*0.3, 0, s*1.2, s*2-legAnim);
+        // Boots
+        ctx.fillStyle = BROWN;
+        ctx.fillRect(-s*2, s*2+legAnim, s*2, s*1);
+        ctx.fillRect(0, s*2-legAnim, s*2, s*1);
+    }
+    ctx.restore();
+}
+
+// ---- Rolling barrels ----
+let barrels = [];
+function drawBarrel(b){
+    ctx.save();
+    ctx.translate(b.x, b.y);
+    ctx.rotate(b.rot);
+    ctx.fillStyle = BARREL_C;
+    ctx.fillRect(-13, -10, 26, 20);
+    ctx.fillStyle = BARREL_D;
+    ctx.fillRect(-13, -10, 26, 4);
+    ctx.fillRect(-13, 6, 26, 4);
+    ctx.fillStyle = BARREL_B;
+    ctx.fillRect(-13, -1, 26, 3);
+    ctx.restore();
+}
+
+// ---- Oil barrel fire at bottom ----
+function drawOilBarrel(x, y, t){
+    // Barrel
+    ctx.fillStyle = '#2040C0';
+    ctx.fillRect(x-14, y-20, 28, 20);
+    ctx.fillStyle = '#3060E0';
+    ctx.fillRect(x-14, y-20, 28, 4);
+    ctx.fillStyle = WHT;
+    ctx.font = '7px "Press Start 2P",monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('OIL', x, y-7);
+    // Fire
+    const flames = [
+        {dx:-4, h:12+Math.sin(t*8)*4},
+        {dx:0, h:16+Math.sin(t*10+1)*5},
+        {dx:4, h:10+Math.sin(t*7+2)*4},
+    ];
+    flames.forEach(f=>{
+        ctx.fillStyle = '#FF4400';
+        ctx.fillRect(x+f.dx-3, y-20-f.h, 6, f.h);
+        ctx.fillStyle = '#FFAA00';
+        ctx.fillRect(x+f.dx-2, y-20-f.h+2, 4, f.h*0.6);
+        ctx.fillStyle = '#FFEE00';
+        ctx.fillRect(x+f.dx-1, y-20-f.h+4, 2, f.h*0.3);
+    });
+    ctx.textAlign = 'left';
+}
+
+// ---- Sparkle effects ----
+let sparkles = [];
+function addSparkle(x,y,col,count){
+    for(let i=0;i<(count||10);i++){
+        sparkles.push({x, y, vx:(Math.random()-0.5)*4, vy:-Math.random()*5-1, life:1, col:col||GRN, size:2+Math.random()*3});
+    }
+}
+
+// ---- Game state ----
+let hero = {x:80, y:0, stage:0, climbing:false, dir:1, frame:0, onPlatform:0, jumping:false, jumpVY:0, jumpBaseY:0};
+let animTime = 0;
+let started = false;
+let completed = false;
+let phase = 'idle'; // idle, walk_to_ladder, climb, walk_on_platform, walk_to_treasure, done
+let currentLadder = 0;
+let stageReached = 0; // highest stage reached
+let dkThrowTimer = 0;
+let pauseTimer = 0;
+
+// ---- DK barrel throw ----
+function throwBarrel(){
+    const dkX = 120;
+    const dkPlatY = platforms[5].y;
+    // Throw towards hero's side
+    const toHero = hero.x - (dkX + 40);
+    barrels.push({
+        x: dkX + 40,
+        y: dkPlatY - 8,
+        vx: toHero > 0 ? 1.8 : -1.8,
+        platIdx: 5,
+        rot: 0,
+        falling: true,
+        fallTarget: 4,
+    });
+}
+
+let guaranteedJump = false; // ensure at least 1 jump happens
+
+function updateBarrels(dt){
+    // Stop throwing when animation is complete
+    if(completed){
+        // Let existing barrels roll off screen then remove
+        for(let i=barrels.length-1; i>=0; i--){
+            const b = barrels[i];
+            if(!b.falling){
+                b.x += b.vx * 70 * dt;
+                b.rot += b.vx * 0.06;
+            }
+            if(b.x < -40 || b.x > W+40 || b.y > H+40) barrels.splice(i,1);
+        }
+        return;
+    }
+    
+    dkThrowTimer += dt;
+    
+    // Guarantee one barrel crosses Mario's path on first platform
+    if(started && !guaranteedJump && hero.onPlatform === 0 && phase === 'walk_to_ladder' && hero.x > 200 && barrels.length === 0){
+        throwBarrel();
+        dkThrowTimer = 0;
+        guaranteedJump = true;
+    }
+    
+    if(dkThrowTimer > 3.5 && barrels.length < 3){
+        throwBarrel();
+        dkThrowTimer = 0;
+    }
+    
+    for(let i=barrels.length-1; i>=0; i--){
+        const b = barrels[i];
+        
+        if(b.falling){
+            // Fall down to next platform
+            b.y += 150 * dt;
+            b.rot += b.vx * 0.1;
+            const target = platforms[b.fallTarget];
+            const tpy = target.y + (b.x - W/2)*target.tilt - 10;
+            if(b.y >= tpy){
+                b.y = tpy;
+                b.falling = false;
+                b.platIdx = b.fallTarget;
+                // ALWAYS roll towards the hero
+                const toHero = hero.x - b.x;
+                b.vx = toHero > 0 ? 1.8 : -1.8;
+                b.vx *= (0.9 + Math.random()*0.3);
+            }
+        } else {
+            // Roll on platform
+            b.x += b.vx * 65 * dt;
+            b.rot += b.vx * 0.1;
+            const p = platforms[b.platIdx];
+            b.y = p.y + (b.x - W/2)*p.tilt - 10;
+            
+            // Reached edge → fall to next platform
+            if(b.x < 20 || b.x > W - 20){
+                if(b.platIdx > 0){
+                    b.falling = true;
+                    b.fallTarget = b.platIdx - 1;
+                } else {
+                    barrels.splice(i,1);
+                    continue;
+                }
+            }
+        }
+        // Remove if off screen
+        if(b.y > H + 30 || b.x < -30 || b.x > W+30) barrels.splice(i,1);
+    }
+}
+
+// ---- Hero movement ----
+const WALK_SPEED = 200;
+const CLIMB_SPEED = 150;
+
+// ---- Barrel jump detection ----
+const JUMP_FORCE = -280;
+const GRAVITY = 800;
+const JUMP_DETECT_RANGE = 75; // detect faster barrels earlier
+let jumpScore = 0;
+let jumpScoreFlash = [];
+let jumpCooldown = 0; // prevents double-jumping
+
+function checkBarrelNearby(){
+    if(hero.climbing || hero.jumping || jumpCooldown > 0) return false;
+    for(let i=0; i<barrels.length; i++){
+        const b = barrels[i];
+        if(b.falling) continue;
+        // Same platform check
+        if(b.platIdx !== hero.onPlatform) continue;
+        const dx = b.x - hero.x;
+        const dist = Math.abs(dx);
+        // Barrel approaching from ahead
+        if(dist < JUMP_DETECT_RANGE && dist > 10){
+            return true;
+        }
+    }
+    return false;
+}
+
+function triggerJump(){
+    if(hero.jumping || hero.climbing) return;
+    hero.jumping = true;
+    hero.jumpVY = JUMP_FORCE;
+    hero.jumpBaseY = hero.y;
+}
+
+function updateJump(dt){
+    if(!hero.jumping){
+        if(jumpCooldown > 0) jumpCooldown -= dt;
+        return;
+    }
+    hero.jumpVY += GRAVITY * dt;
+    hero.y += hero.jumpVY * dt;
+    // Land back on platform
+    const groundY = platY(hero.onPlatform, hero.x) - 2;
+    if(hero.y >= groundY && hero.jumpVY > 0){
+        hero.y = groundY;
+        hero.jumping = false;
+        hero.jumpVY = 0;
+        jumpCooldown = 0.7; // wait before next jump
+        // Check if we jumped over any barrel → score!
+        barrels.forEach(b=>{
+            if(b.falling) return;
+            if(b.platIdx === hero.onPlatform && Math.abs(b.x - hero.x) < 50){
+                jumpScore += 100;
+                jumpScoreFlash.push({x:hero.x, y:hero.y - 40, life:1, val:100});
+            }
+        });
+    }
+}
+
+function updateHero(dt){
+    if(!started || completed) return;
+    hero.frame += dt * 16;
+    
+    // Jump physics always active
+    updateJump(dt);
+    
+    if(pauseTimer > 0){
+        pauseTimer -= dt;
+        // Still check for jumps while paused
+        if(checkBarrelNearby()) triggerJump();
+        return;
+    }
+    
+    // Auto-jump when barrel approaches
+    if(!hero.climbing && checkBarrelNearby()){
+        triggerJump();
+    }
+    
+    switch(phase){
+        case 'walk_to_ladder': {
+            if(currentLadder >= ladders.length){
+                phase = 'walk_to_treasure';
+                break;
+            }
+            const l = ladders[currentLadder];
+            const targetX = l.x + 11;
+            const dx = targetX - hero.x;
+            if(Math.abs(dx) > 4){
+                hero.dir = dx > 0 ? 1 : -1;
+                hero.x += hero.dir * WALK_SPEED * dt;
+                // Keep on platform (unless jumping)
+                if(!hero.jumping) hero.y = platY(hero.onPlatform, hero.x) - 2;
+            } else {
+                hero.x = targetX;
+                if(!hero.jumping){
+                    phase = 'climb';
+                    hero.climbing = true;
+                }
+            }
+            break;
+        }
+        case 'climb': {
+            const l = ladders[currentLadder];
+            const targetPlatIdx = l.p2;
+            const targetY = platY(targetPlatIdx, hero.x) - 2;
+            if(hero.y > targetY + 2){
+                hero.y -= CLIMB_SPEED * dt;
+            } else {
+                hero.y = targetY;
+                hero.climbing = false;
+                hero.onPlatform = targetPlatIdx;
+                currentLadder++;
+                stageReached = Math.min(currentLadder, stages.length);
+                addSparkle(hero.x, hero.y - 15, stages[Math.min(currentLadder-1, stages.length-1)].color);
+                pauseTimer = 0.35;
+                if(currentLadder >= ladders.length){
+                    phase = 'walk_to_treasure';
+                } else {
+                    phase = 'walk_to_ladder';
+                }
+            }
+            break;
+        }
+        case 'walk_to_treasure': {
+            const targetX = 480;
+            const dx = targetX - hero.x;
+            if(Math.abs(dx) > 4){
+                hero.dir = dx > 0 ? 1 : -1;
+                hero.x += hero.dir * WALK_SPEED * dt;
+                if(!hero.jumping) hero.y = platY(hero.onPlatform, hero.x) - 2;
+            } else {
+                // Trigger GTA SA money pickup
+                moneyCollected = true;
+                moneyCollectAnim = 0;
+                // GTA SA pickup text
+                jumpScoreFlash.push({x:hero.x, y:hero.y - 50, life:1.5, val:'+63 840₽'});
+                // Delay completion until collection animation plays
+                setTimeout(()=>{
+                    phase = 'done';
+                    completed = true;
+                    stageReached = stages.length;
+                    addSparkle(hero.x, hero.y - 20, GRN, 15);
+                    addSparkle(hero.x-15, hero.y - 25, YLW, 10);
+                    addSparkle(hero.x+15, hero.y - 20, '#FF2D6B', 10);
+                    addSparkle(hero.x, hero.y - 30, '#4CAF50', 12);
+                }, 600);
+            }
+            break;
+        }
+    }
+}
+
+// ---- Stage labels ----
+function drawStageLabels(){
+    stages.forEach((s, i)=>{
+        const p = platforms[s.platIdx];
+        // Alternate left/right
+        const isLeft = i % 2 === 0;
+        const lx = isLeft ? 55 : W - 55;
+        const ly = p.y - 52;
+        const align = isLeft ? 'left' : 'right';
+        const reached = i < stageReached;
+        const active = i === stageReached - 1 || (completed && i === stages.length-1);
+        
+        ctx.save();
+        ctx.textAlign = align;
+        
+        // Stage label
+        ctx.fillStyle = reached || active ? s.color : 'rgba(255,255,255,.2)';
+        ctx.font = '8px "Press Start 2P",monospace';
+        ctx.fillText(s.label, lx, ly);
+        
+        // Title with icon
+        ctx.fillStyle = reached || active ? WHT : 'rgba(255,255,255,.25)';
+        ctx.font = 'bold 15px "Rubik",sans-serif';
+        ctx.fillText(s.icon + ' ' + s.title, lx, ly + 18);
+        
+        // Description
+        ctx.fillStyle = reached || active ? 'rgba(255,255,255,.55)' : 'rgba(255,255,255,.15)';
+        ctx.font = '11px "Rubik",sans-serif';
+        ctx.fillText(s.desc, lx, ly + 34);
+        
+        // Checkmark
+        if(reached){
+            const cx = isLeft ? lx - 18 : lx + 10;
+            ctx.fillStyle = GRN;
+            ctx.font = '12px "Press Start 2P",monospace';
+            ctx.textAlign = 'center';
+            ctx.fillText('✓', cx, ly + 18);
+        }
+        
+        ctx.restore();
+    });
+}
+
+// ---- GTA SA style spinning money pickup ----
+let moneyCollected = false;
+let moneyCollectAnim = 0; // 0=not collected, 0→1 = collecting animation
+
+function drawSpinningMoney(t){
+    const x = 480, y = platforms[6].y - 25;
+    
+    if(moneyCollected && moneyCollectAnim >= 1) return; // fully collected
+    
+    // Collection animation — money flies to hero
+    if(moneyCollected){
+        moneyCollectAnim = Math.min(moneyCollectAnim + 0.03, 1);
+        const ease = 1 - Math.pow(1 - moneyCollectAnim, 3); // ease out cubic
+        const mx = x + (hero.x - x) * ease;
+        const my = y + (hero.y - 20 - y) * ease;
+        const scale = 1 - ease * 0.7;
+        ctx.globalAlpha = 1 - ease;
+        drawMoneySprite(mx, my, t, scale);
+        ctx.globalAlpha = 1;
+        
+        // Burst of bills flying out
+        if(moneyCollectAnim < 0.3){
+            for(let i=0;i<2;i++){
+                sparkles.push({
+                    x:mx + (Math.random()-0.5)*30,
+                    y:my + (Math.random()-0.5)*20,
+                    vx:(Math.random()-0.5)*5,
+                    vy:-Math.random()*3-2,
+                    life:0.8, col:'#4CAF50', size:4+Math.random()*4
+                });
+            }
+        }
+        return;
+    }
+    
+    // Hovering bounce
+    const hover = Math.sin(t*2.5)*4;
+    
+    // Green glow on ground
+    const glowPulse = 0.2 + Math.sin(t*4)*0.1;
+    ctx.fillStyle = `rgba(57,255,20,${glowPulse})`;
+    ctx.beginPath();
+    ctx.arc(x, y + 12, 25, 0, Math.PI*2);
+    ctx.fill();
+    
+    // Rotating green glow ring
+    ctx.strokeStyle = `rgba(57,255,20,${0.15 + Math.sin(t*3)*0.1})`;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(x, y + hover, 30 + Math.sin(t*2)*3, 0, Math.PI*2);
+    ctx.stroke();
+    
+    drawMoneySprite(x, y + hover, t, 1);
+    
+    // "63 840₽/мес" floating above
+    ctx.fillStyle = GRN;
+    ctx.font = '8px "Press Start 2P",monospace';
+    ctx.textAlign = 'center';
+    const labelY = y + hover - 45;
+    ctx.fillText('63 840₽', x, labelY);
+    ctx.fillStyle = 'rgba(57,255,20,.5)';
+    ctx.font = '6px "Press Start 2P",monospace';
+    ctx.fillText('/МЕС', x, labelY + 10);
+    ctx.textAlign = 'left';
+}
+
+function drawMoneySprite(x, y, t, scale){
+    ctx.save();
+    ctx.translate(x, y);
+    if(scale !== 1) ctx.scale(scale, scale);
+    
+    // GTA SA 3D spin — simulate Y-axis rotation with scaleX
+    const spin = t * 3; // rotation speed
+    const scaleX = Math.cos(spin); // -1 to 1, simulates 3D flip
+    const absScale = Math.abs(scaleX);
+    
+    // Bundle width changes with rotation (3D effect)
+    const bw = 36 * absScale;
+    const bh = 22;
+    
+    if(bw < 2){
+        // Edge-on — just a thin line
+        ctx.fillStyle = '#2E7D32';
+        ctx.fillRect(-1, -bh/2, 2, bh);
+    } else {
+        // Front or back face
+        const isFront = scaleX > 0;
+        
+        // Shadow under bundle
+        ctx.fillStyle = 'rgba(0,0,0,.3)';
+        ctx.fillRect(-bw/2 + 2, bh/2, bw, 3);
+        
+        // Stack of bills (3-4 visible)
+        for(let i=0; i<4; i++){
+            const billY = -bh/2 + bh - (i+1)*5;
+            const shade = isFront ? 
+                ['#1B5E20','#2E7D32','#388E3C','#43A047'][i] :
+                ['#145218','#1E6425','#2B7530','#368B3B'][i];
+            ctx.fillStyle = shade;
+            ctx.fillRect(-bw/2 + i*1, billY, bw - i*2, 5);
+            // Bill detail line
+            ctx.fillStyle = 'rgba(255,255,255,.08)';
+            ctx.fillRect(-bw/2 + i*1, billY, bw - i*2, 1);
+        }
+        
+        // Money band (red rubber band)
+        ctx.fillStyle = '#D32F2F';
+        ctx.fillRect(-bw*0.3, -bh/2 + 2, bw*0.6, bh - 4);
+        ctx.fillStyle = '#B71C1C';
+        ctx.fillRect(-bw*0.3, -bh/2 + 2, bw*0.6, 2);
+        ctx.fillRect(-bw*0.3, bh/2 - 4, bw*0.6, 2);
+        
+        // ₽ symbol on the band
+        if(bw > 15){
+            ctx.fillStyle = '#FFEB3B';
+            ctx.font = `${Math.max(6, bw*0.3)|0}px "Press Start 2P",monospace`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('₽', 0, 0);
+            ctx.textBaseline = 'alphabetic';
+            ctx.textAlign = 'left';
+        }
+    }
+    
+    ctx.restore();
+}
+
+
+// ---- HIGH SCORE display (like original) ----
+function drawHUD(){
+    ctx.fillStyle = RED;
+    ctx.font = '11px "Press Start 2P",monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('HIGH SCORE', W/2, 22);
+    
+    ctx.fillStyle = WHT;
+    ctx.font = '10px "Press Start 2P",monospace';
+    ctx.fillText('063840', W/2, 38);
+    
+    // Bonus box (top right)
+    ctx.strokeStyle = CY;
+    ctx.lineWidth = 2;
+    ctx.strokeRect(W-140, 10, 110, 38);
+    ctx.fillStyle = CY;
+    ctx.font = '8px "Press Start 2P",monospace';
+    ctx.fillText('BONUS', W-85, 26);
+    ctx.fillStyle = CY;
+    ctx.font = '11px "Press Start 2P",monospace';
+    ctx.fillText('63840', W-85, 42);
+    
+    // L=01
+    ctx.fillStyle = '#4080FF';
+    ctx.font = '9px "Press Start 2P",monospace';
+    ctx.textAlign = 'right';
+    ctx.fillText('L=01', W-150, 26);
+    ctx.textAlign = 'left';
+}
+
+// ---- Main loop ----
+let lastT = 0;
+
+function render(ts){
+    requestAnimationFrame(render);
+    const dt = Math.min((ts - lastT) / 1000, 0.05);
+    lastT = ts;
+    animTime += dt;
+    
+    // Clear
+    ctx.fillStyle = BG;
+    ctx.fillRect(0, 0, W, H);
+    
+    // HUD
+    drawHUD();
+    
+    // Platforms
+    drawAllPlatforms();
+    
+    // Ladders
+    ladders.forEach(l => drawLadder(l));
+    
+    // Oil barrel with fire (bottom left)
+    drawOilBarrel(55, platforms[0].y, animTime);
+    
+    // DK gorilla at top
+    const dkX = 120;
+    const dkY = platforms[5].y - 5;
+    drawDK(dkX, dkY, completed ? 0 : animTime);
+    
+    // Barrel stack next to DK
+    drawBarrelStack(dkX - 55, dkY + 5);
+    
+    // Money stack on prize platform
+    drawSpinningMoney(animTime);
+    
+    // Rolling barrels
+    updateBarrels(dt);
+    barrels.forEach(b => drawBarrel(b));
+    
+    // Stage labels
+    drawStageLabels();
+    
+    // Hero
+    updateHero(dt);
+    if(!started){
+        // Idle bob at start
+        const bob = Math.sin(animTime*2)*2;
+        hero.y = platY(0, hero.x) - 2 + bob;
+        drawMario(hero.x, hero.y, false, animTime*6, 1);
+    } else {
+        drawMario(hero.x, hero.y, hero.climbing, hero.frame, hero.dir);
+    }
+    
+    // Sparkles
+    for(let i=sparkles.length-1;i>=0;i--){
+        const s=sparkles[i];
+        s.x+=s.vx; s.y+=s.vy; s.vy+=0.12; s.life-=dt*2;
+        if(s.life<=0){sparkles.splice(i,1);continue;}
+        ctx.globalAlpha=s.life;
+        ctx.fillStyle=s.col;
+        ctx.fillRect(s.x-s.size/2,s.y-s.size/2,s.size,s.size);
+    }
+    ctx.globalAlpha=1;
+    
+    // Jump score flashes ("+100" like original DK)
+    for(let i=jumpScoreFlash.length-1;i>=0;i--){
+        const f=jumpScoreFlash[i];
+        f.y -= 40*dt;
+        f.life -= dt*1.5;
+        if(f.life<=0){jumpScoreFlash.splice(i,1);continue;}
+        ctx.globalAlpha=f.life > 1 ? 1 : f.life;
+        ctx.fillStyle = typeof f.val === 'string' ? '#4CAF50' : WHT;
+        ctx.textAlign='center';
+        ctx.font = typeof f.val === 'string' ? '12px "Press Start 2P",monospace' : '10px "Press Start 2P",monospace';
+        ctx.fillText(f.val+'', f.x, f.y);
+    }
+    ctx.globalAlpha=1;
+    ctx.textAlign='left';
+    
+    // Completed overlay
+    if(completed){
+        ctx.fillStyle = GRN;
+        ctx.textAlign = 'center';
+        ctx.font = '14px "Press Start 2P",monospace';
+        const flash = Math.sin(animTime*4) > 0 ? 1 : 0.5;
+        ctx.globalAlpha = flash;
+        ctx.fillText('★ LEVEL COMPLETE! ★', W/2, H - 22);
+        // GTA SA style money amount flash
+        ctx.fillStyle = '#4CAF50';
+        ctx.font = '11px "Press Start 2P",monospace';
+        ctx.globalAlpha = 0.6 + Math.sin(animTime*5)*0.4;
+        ctx.fillText('+63 840₽/МЕС', W/2, H - 42);
+        ctx.globalAlpha = 1;
+        ctx.textAlign = 'left';
+    }
+    
+    // Start prompt
+    if(!started){
+        ctx.fillStyle = YLW;
+        ctx.textAlign = 'center';
+        ctx.font = '9px "Press Start 2P",monospace';
+        const f = Math.sin(animTime*3) > 0 ? 1 : 0.4;
+        ctx.globalAlpha = f;
+        ctx.fillText('► НАЖМИТЕ ЧТОБЫ НАЧАТЬ ◄', W/2, H - 18);
+        ctx.globalAlpha = 1;
+        ctx.textAlign = 'left';
+    }
+}
+
+// ---- Start ----
+function startClimb(){
+    if(started) return;
+    started = true;
+    hero.x = 80;
+    hero.y = platY(0, hero.x) - 2;
+    hero.onPlatform = 0;
+    hero.climbing = false;
+    currentLadder = 0;
+    stageReached = 0;
+    phase = 'walk_to_ladder';
+}
+
+canvas.addEventListener('click', startClimb);
+canvas.addEventListener('touchstart', e=>{e.preventDefault();startClimb();},{passive:false});
+
+// Auto-start on scroll into view
+const obs = new IntersectionObserver(entries=>{
+    if(entries[0].isIntersecting && !started) setTimeout(startClimb, 400);
+},{threshold:0.4});
+obs.observe(canvas);
+
+hero.x = 80;
+hero.y = platY(0, 80) - 2;
+
+requestAnimationFrame(render);
+})();
 </script>
 </body>
 </html>
